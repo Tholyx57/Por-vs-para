@@ -273,9 +273,7 @@ const questionPool = [
     question: "Salimos ___ el cine después de cenar en casa.",
     correct: "para",
     rationale: "Para is used to indicate a destination. The speakers are leaving for the movie theater."
-  }
-],
-  const questionPool = [
+  },
   {
     question: "Este dinero es ___ pagar la matrícula universitaria.",
     correct: "para",
