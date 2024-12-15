@@ -39,7 +39,7 @@ const questionPool = [
   { question: "El regalo fue comprado ___ mi hermana.", correct: "por", rationale: "Por is used to indicate the agent of an action in passive voice." },
   { question: "Este proyecto es ___ mejorar nuestra comunidad.", correct: "para", rationale: "Para is used to express purpose. The project is for improving the community." },
   { question: "El tren es ___ Sevilla y sale en 10 minutos.", correct: "para", rationale: "Para is used to indicate the destination of the train." },
-  { question: "La tarea es ___ el lunes; no olvides completarla.", correct: "para", rationale: "Para is used to express a deadline. The homework is due by Monday." }const questionPool = [
+  { question: "La tarea es ___ el lunes; no olvides completarla.", correct: "para", rationale: "Para is used to express a deadline. The homework is due by Monday." }
   {  question: "Caminamos ___ el parque para disfrutar el buen clima.",
     correct: "por",
     rationale: "Por is used for movement through or along a space, such as a park. It describes the route taken."
