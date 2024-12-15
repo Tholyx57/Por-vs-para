@@ -1,17 +1,3 @@
-// Fixed question pool with no duplicates or missing syntax
-const questionPool = [
-  { question: "Caminamos ___ el parque para disfrutar el buen clima.", correct: "por", rationale: "Por is used for movement through or along a space." },
-  { question: "Este regalo es ___ mi mejor amigo.", correct: "para", rationale: "Para is used to indicate the recipient of the gift." },
-  { question: "Gracias ___ tu ayuda con el proyecto.", correct: "por", rationale: "Por is used to express gratitude or reason." },
-  { question: "Estuve en casa ___ el mal tiempo.", correct: "por", rationale: "Por is used to indicate the reason (bad weather)." },
-  { question: "Salimos ___ la playa a las 8 de la mañana.", correct: "para", rationale: "Para is used to indicate a destination." },
-  { question: "Trabajé toda la noche ___ terminar el informe a tiempo.", correct: "para", rationale: "Para is used to express purpose or goal." },
-  { question: "¿Puedes trabajar ___ mí mañana? Estoy muy ocupado.", correct: "por", rationale: "Por is used to indicate substitution (working on behalf of someone)." },
-  { question: "Lo compré ___ $50 en una tienda cercana.", correct: "por", rationale: "Por is used to indicate exchange or cost." },
-  { question: "Ella viajó ___ España durante las vacaciones de verano.", correct: "por", rationale: "Por is used for movement through a place." },
-  { question: "Este tren va ___ Madrid y hace pocas paradas.", correct: "para", rationale: "Para is used to indicate a destination." },
-];
-
 // Variables to manage the current state
 let currentIndex = 0; // Index of the first question in the current set
 const questionsPerPage = 10; // Number of questions displayed per page
@@ -23,6 +9,13 @@ function loadQuestions() {
 
   // Select the current set of questions
   const currentQuestions = questionPool.slice(currentIndex, currentIndex + questionsPerPage);
+
+  // Check if there are no more questions
+  if (currentQuestions.length === 0) {
+    document.getElementById("result").innerText = "You've completed all the questions!";
+    document.getElementById("next-btn").disabled = true; // Disable the "Next Questions" button
+    return;
+  }
 
   // Display each question
   currentQuestions.forEach((q, index) => {
@@ -67,14 +60,8 @@ function evaluateAnswers() {
 
 // Function to load the next set of questions
 function nextQuestions() {
-  const maxIndex = questionPool.length; // Total number of questions
-  if (currentIndex + questionsPerPage < maxIndex) {
-    currentIndex += questionsPerPage; // Move to the next set of questions
-    document.getElementById("result").innerText = ""; // Clear previous result
-    loadQuestions(); // Load the next set of questions
-  } else {
-    document.getElementById("result").innerText = "You've completed all the questions!";
-  }
+  currentIndex += questionsPerPage; // Move to the next set of questions
+  loadQuestions(); // Reload the questions
 }
 
 // Initialize the quiz
