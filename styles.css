@@ -1,6 +1,6 @@
 /* General styling for the page */
 body {
-  font-family: Verdana, sans-serif; /* Use Verdana for all text */
+  font-family: Verdana, sans-serif;
   margin: 0; /* Reset default browser margins */
   padding: 0; /* Reset default browser padding */
   background-color: #f9f9f9; /* Light gray background */
@@ -17,6 +17,11 @@ body {
   border: 1px solid #ccc; /* Subtle border for separation */
   border-radius: 8px; /* Round the edges slightly */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+}
+
+/* Add padding specifically to the left side of the page */
+body {
+  padding-left: 20px; /* Ensures text is not mashed against the left edge */
 }
 
 /* Header styles */
@@ -43,4 +48,58 @@ main {
 h2 {
   color: #0077cc; /* Blue headings */
   font-size: 16pt; /* Set subheadings size to 16pt */
-  margin-bottom: 
+  margin-bottom: 10px; /* Add spacing below headings */
+}
+
+.content-box {
+  background: #f4f4f4; /* Light gray background */
+  padding: 15px; /* Add padding inside the box */
+  margin-bottom: 15px; /* Add spacing between content boxes */
+  border-left: 4px solid #0077cc; /* Blue border to highlight section */
+}
+
+ul {
+  margin: 0;
+  padding-left: 20px; /* Indent list items */
+}
+
+/* Quiz question styles */
+#questions-container {
+  margin-top: 20px;
+}
+
+.quiz-question {
+  margin-bottom: 15px; /* Add spacing between questions */
+}
+
+.feedback {
+  margin-top: 5px; /* Add spacing above feedback text */
+  font-size: 11pt; /* Slightly smaller font for feedback */
+}
+
+/* Buttons */
+button {
+  background: #0077cc; /* Blue button background */
+  color: white; /* White text */
+  border: none;
+  padding: 10px 20px; /* Add padding inside buttons */
+  cursor: pointer;
+  border-radius: 5px; /* Slightly rounded corners */
+}
+
+button:hover {
+  background: #005fa3; /* Darker blue on hover */
+}
+
+#result {
+  font-size: 12pt; /* Set result text size */
+  margin-top: 20px;
+  font-weight: bold; /* Emphasize the result text */
+}
+
+/* Footer styles */
+footer {
+  text-align: center; /* Center the footer text */
+  margin-top: 20px; /* Add spacing above footer */
+  font-size: 11pt; /* Smaller text for footer */
+}
