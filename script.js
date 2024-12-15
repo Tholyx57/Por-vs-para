@@ -4,19 +4,21 @@ let totalScore = 0;
 let porCorrect = 0;
 let paraCorrect = 0;
 
+console.log("Question Pool:", questionPool); // Check if questionPool is loaded
+
 // Function to load the current question
 function loadQuestion() {
+  console.log("Loading question:", questionPool[currentIndex]); // Log the current question
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = ""; // Clear previous question
 
-  // Check if there are no more questions
   if (currentIndex >= questionPool.length) {
+    console.log("Quiz Complete! Final Score:", totalScore); // Log quiz completion
     document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${questionPool.length}.`;
     updateProgressBar();
     return;
   }
 
-  // Display the current question
   const currentQuestion = questionPool[currentIndex];
   const div = document.createElement("div");
   div.classList.add("quiz-question");
@@ -29,7 +31,6 @@ function loadQuestion() {
   `;
   quizContainer.appendChild(div);
 
-  // Add event listener to the submit button
   document.getElementById("submit-btn").addEventListener("click", evaluateAnswer);
 }
 
@@ -37,6 +38,8 @@ function loadQuestion() {
 function evaluateAnswer() {
   const currentQuestion = questionPool[currentIndex];
   const selectedOption = document.querySelector('input[name="answer"]:checked');
+  console.log("Selected Answer:", selectedOption ? selectedOption.value : "None"); // Log selected answer
+  console.log("Correct Answer:", currentQuestion.correct); // Log the correct answer
   const feedback = document.getElementById("feedback");
 
   if (!selectedOption) {
@@ -45,7 +48,6 @@ function evaluateAnswer() {
     return;
   }
 
-  // Check the answer
   if (selectedOption.value === currentQuestion.correct) {
     totalScore++;
     if (currentQuestion.correct === "por") porCorrect++;
@@ -57,7 +59,6 @@ function evaluateAnswer() {
     feedback.style.color = "red";
   }
 
-  // Update progress and move to the next question
   currentIndex++;
   updateProgressBar();
   setTimeout(loadQuestion, 5000); // Load the next question after 5 seconds
@@ -65,6 +66,8 @@ function evaluateAnswer() {
 
 // Function to update the progress bar
 function updateProgressBar() {
+  console.log(`Progress: Current Index = ${currentIndex}, Total Questions = ${questionPool.length}`);
+  console.log(`Por Correct: ${porCorrect}, Para Correct: ${paraCorrect}`);
   const progressContainer = document.getElementById("progress-container");
   const totalProgress = Math.round((currentIndex / questionPool.length) * 100);
   const porProgress = Math.round((porCorrect / questionPool.length) * 100);
@@ -80,13 +83,13 @@ function updateProgressBar() {
 
 // Initialize the quiz after dynamically loading the question pool
 function initQuiz() {
+  console.log("Initializing the quiz..."); // Log when quiz initialization starts
   if (typeof questionPool !== "undefined") {
-    loadQuestion(); // Load the first question
-    updateProgressBar(); // Initialize progress bar
+    loadQuestion();
+    updateProgressBar();
   } else {
     console.error("Question pool is not loaded. Please ensure questions.js is included.");
   }
 }
 
-// Run the initialization function when the page loads
 document.addEventListener("DOMContentLoaded", initQuiz);
