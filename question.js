@@ -504,5 +504,5 @@ const questionPool = [
     correct: "para",
     rationale: "Para is used to indicate the destination. The train is going to Madrid."
   }
-]
+];
 
