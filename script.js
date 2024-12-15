@@ -20,7 +20,6 @@ const questionPool = [
   { question: "Viajamos ___ avión porque era más rápido que el tren.", correct: "por", rationale: "Por is used to indicate means of transportation." },
   { question: "Salimos temprano ___ evitar el tráfico pesado en la carretera.", correct: "para", rationale: "Para is used to express purpose or goal." },
   { question: "Caminamos ___ el bosque durante nuestra caminata diaria.", correct: "por", rationale: "Por is used for movement through a place." },
-  const questionPool = [
   { question: "Caminamos ___ el parque para disfrutar el buen clima.", correct: "por", rationale: "Por is used for movement through or along a space." },
   { question: "Este regalo es ___ mi mejor amigo.", correct: "para", rationale: "Para is used to indicate the recipient of the gift." },
   { question: "Gracias ___ tu ayuda con el proyecto.", correct: "por", rationale: "Por is used to express gratitude or reason." },
@@ -81,7 +80,12 @@ const questionPool = [
   { question: "Necesitamos terminar este trabajo ___ la próxima semana.", correct: "para", rationale: "Para is used to express a deadline." },
   { question: "Me disculpo ___ llegar tarde; hubo mucho tráfico.", correct: "por", rationale: "Por is used to indicate the reason (traffic)." },
   { question: "Fui al mercado ___ comprar frutas frescas.", correct: "para", rationale: "Para is used to express purpose or goal." }
+  { question: "Caminamos ___ el parque para disfrutar el buen clima.", correct: "por", rationale: "Por is used for movement through or along a space." },
+  { question: "Este regalo es ___ mi mejor amigo.", correct: "para", rationale: "Para is used to indicate the recipient of the gift." },
+  { question: "Gracias ___ tu ayuda con el proyecto.", correct: "por", rationale: "Por is used to express gratitude or reason." },
+  { question: "Estuve en casa ___ el mal tiempo.", correct: "por", rationale: "Por is used to indicate the reason (bad weather)." },
 ];
+
 // Variables to manage the current state
 let currentIndex = 0; // Index of the first question in the current set
 const questionsPerPage = 10; // Number of questions displayed per page
