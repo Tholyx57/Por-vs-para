@@ -58,72 +58,9 @@ const questionPool = [
   { question: "Necesitamos terminar este trabajo ___ la próxima semana.", correct: "para", rationale: "Para is used to express a deadline." },
   { question: "Me disculpo ___ llegar tarde; hubo mucho tráfico.", correct: "por", rationale: "Por is used to indicate the reason (traffic)." },
   { question: "Fui al mercado ___ comprar frutas frescas.", correct: "para", rationale: "Para is used to express purpose or goal." }
-];// Tracking variables
-let currentIndex = 0;
-let totalScore = 0;
+];
 
-// Function to load the current question
-function loadQuestion() {
-  const quizContainer = document.getElementById("questions-container");
-  quizContainer.innerHTML = ""; // Clear previous question
-
-  // Check if there are no more questions
-  if (currentIndex >= questionPool.length) {
-    document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${questionPool.length}.`;
-    document.getElementById("progress-bar").style.width = "100%";
-    return;
-  }
-
-  // Display the current question
-  const currentQuestion = questionPool[currentIndex];
-  const div = document.createElement("div");
-  div.classList.add("quiz-question");
-  div.innerHTML = `
-    <p>${currentQuestion.question}</p>
-    <input type="radio" id="option-por" name="answer" value="por"> <label for="option-por">Por</label><br>
-    <input type="radio" id="option-para" name="answer" value="para"> <label for="option-para">Para</label><br>
-    <button id="submit-btn">Submit</button>
-    <p id="feedback" class="feedback"></p>
-  `;
-  quizContainer.appendChild(div);
-
-  // Add event listener to the submit button
-  document.getElementById("submit-btn").addEventListener("click", evaluateAnswer);
-}
-
-// Function to evaluate the answer
-function evaluateAnswer() {
-  const currentQuestion = questionPool[currentIndex];
-  const selectedOption = document.querySelector('input[name="answer"]:checked');
-  const feedback = document.getElementById("feedback");
-
-  if (!selectedOption) {
-    feedback.textContent = "Please select an answer before submitting.";
-    feedback.style.color = "red";
-    return;
-  }
-
-  // Check the answer
-  if (selectedOption.value === currentQuestion.correct) {
-    totalScore++;
-    feedback.textContent = `Correct! ${currentQuestion.rationale}`;
-    feedback.style.color = "green";
-  } else {
-    feedback.textContent = `Incorrect. ${currentQuestion.rationale}`;
-    feedback.style.color = "red";
-  }
-
-  // Update progress and move to the next question
-  currentIndex++;
-  updateProgressBar();
-  setTimeout(loadQuestion, 2000); // Load the next question after a short delay
-}
-
-// Function to update the progress bar
-function updateProgressBar() {
-  const progress = Math.round((currentIndex / questionPool.length) * 100);
-  document.getElementById("progress-bar").style.width = `${progress}%`;
-  document.getElementById("progress-bar").innerText = `${progress}%`;
+  document.getElementById("progress-label").innerText = `Progress: ${totalProgress}% (Por: ${porCorrect}, Para: ${paraCorrect})`;
 }
 
 // Initialize the quiz
@@ -134,7 +71,6 @@ function initQuiz() {
 
 // Run the initialization function when the page loads
 document.addEventListener("DOMContentLoaded", initQuiz);
-
 
 // Run the initialization function when the page loads
 document.addEventListener("DOMContentLoaded", initQuiz);
