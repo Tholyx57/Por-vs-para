@@ -7,56 +7,27 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Master "Por" vs "Para"</h1>
-    <p>Learn, practice, and track your progress with this interactive quiz!</p>
-  </header>
-
-  <main>
-    <!-- Teaching Section -->
-    <section id="teaching-section">
-      <h2>Understanding "Por" and "Para"</h2>
-      <div class="content-box">
-        <h3>Por</h3>
-        <p><strong>Usage:</strong> Reasons, causes, means, duration, exchanges, or movement through a space.</p>
-        <p><strong>Examples:</strong></p>
-        <ul>
-          <li>Gracias <strong>por</strong> tu ayuda. (Thanks <strong>for</strong> your help.)</li>
-          <li>Viajamos <strong>por</strong> España. (We traveled <strong>through</strong> Spain.)</li>
-        </ul>
+  <div id="app">
+    <header>
+      <h1>Por vs Para Quiz</h1>
+      <p>Test your knowledge! Select the correct option for each question.</p>
+    </header>
+    <main>
+      <!-- Progress bar -->
+      <div id="progress-container">
+        <div id="progress-bar">0%</div>
       </div>
-      <div class="content-box">
-        <h3>Para</h3>
-        <p><strong>Usage:</strong> Purposes, goals, recipients, destinations, or deadlines.</p>
-        <p><strong>Examples:</strong></p>
-        <ul>
-          <li>Este regalo es <strong>para</strong> ti. (This gift is <strong>for</strong> you.)</li>
-          <li>Salimos <strong>para</strong> la playa. (We left <strong>for</strong> the beach.)</li>
-        </ul>
-      </div>
-    </section>
 
-    <!-- Quiz Section -->
-    <section id="quiz-section">
-  <h2>Interactive Quiz</h2>
-  <p>Select "por" or "para" for each question. Feedback and rationale will be provided after answering.</p>
-  <div id="questions-container"></div>
-<button id="submit-btn">Submit Answers</button>
-<button id="next-btn">Next Questions</button>
-<p id="result"></p>
+      <!-- Container for displaying the question -->
+      <div id="questions-container"></div>
 
-
-
-    <!-- Score Section -->
-    <section id="score-section">
-      <h2>Your Progress</h2>
-      <p id="score">Previous Score: 0/10</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>Created to help you master the nuances of Spanish prepositions.</p>
-  </footer>
+      <!-- Result output -->
+      <p id="result"></p>
+    </main>
+    <footer>
+      <p>Keep practicing and mastering Por vs Para!</p>
+    </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>
