@@ -1,3 +1,4 @@
+console.log("Loaded question pool:", questionPool);
 // Tracking variables
 let currentIndex = 0;
 let totalScore = 0;
