@@ -200,4 +200,12 @@ function initQuiz() {
   document.getElementById("next-paragraph").addEventListener("click", loadParagraph);
 }
 
-document.addEventListener("DOMContentLoaded", initQuiz);
+// Initialize paragraph practice
+function initParagraphPractice() {
+  loadParagraph();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initQuiz();
+  initParagraphPractice();
+});
