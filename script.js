@@ -8,10 +8,8 @@ let quizIncorrectAnswers = 0;
 let paragraphCorrectAnswers = 0;
 let paragraphIncorrectAnswers = 0;
 let paragraphIndex = 0;
-let incorrectAnswers = [];
-let streak = 0;
 
-// Shuffle the questions on page load
+// Shuffle questions on page load
 function shuffleQuestions(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -26,7 +24,6 @@ function loadQuestion() {
 
   if (currentIndex >= questionPool.length) {
     document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${questionPool.length}.`;
-    showReview();
     return;
   }
 
@@ -62,33 +59,20 @@ function evaluateAnswer() {
     feedback.style.color = "green";
     quizCorrectAnswers++;
     totalScore++;
-    streak++;
     if (currentQuestion.correct === "por") porCorrect++;
     if (currentQuestion.correct === "para") paraCorrect++;
   } else {
     feedback.textContent = `Incorrect. ${currentQuestion.rationale}`;
     feedback.style.color = "red";
     quizIncorrectAnswers++;
-    streak = 0;
-    incorrectAnswers.push(currentQuestion);
   }
 
-  updateProgressBar();
   updateQuizScoreDisplay();
 
   setTimeout(() => {
     currentIndex++;
     loadQuestion();
-  }, 5000);
-}
-
-// Update quiz progress bar
-function updateProgressBar() {
-  const progressContainer = document.getElementById("progress-bar");
-  const totalProgress = Math.round((currentIndex / questionPool.length) * 100);
-  progressContainer.style.width = `${totalProgress}%`;
-
-  document.getElementById("progress-label").innerText = `Progress: ${totalProgress}% (Por: ${porCorrect}, Para: ${paraCorrect}) | Streak: ${streak}`;
+  }, 3000);
 }
 
 // Update quiz score display
@@ -98,22 +82,6 @@ function updateQuizScoreDisplay() {
     <p style="color: green;">Correct: ${quizCorrectAnswers}</p>
     <p style="color: red;">Incorrect: ${quizIncorrectAnswers}</p>
   `;
-}
-
-// Show review of incorrect answers
-function showReview() {
-  const quizContainer = document.getElementById("questions-container");
-  quizContainer.innerHTML = "<h2>Review Incorrect Answers</h2>";
-
-  incorrectAnswers.forEach((question, index) => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <p>${index + 1}. ${question.question}</p>
-      <p><strong>Correct Answer:</strong> ${question.correct}</p>
-      <p><strong>Explanation:</strong> ${question.rationale}</p>
-    `;
-    quizContainer.appendChild(div);
-  });
 }
 
 // Load paragraph practice
@@ -174,12 +142,13 @@ function evaluateParagraph() {
     feedback.innerHTML += `<ul>${rationaleList}</ul>`;
   }
 
-  updateParagraphScoreDisplay();
   nextButton.style.display = "block";
   nextButton.addEventListener("click", () => {
     paragraphIndex++;
     loadParagraph();
   });
+
+  updateParagraphScoreDisplay();
 }
 
 // Update paragraph score display
@@ -191,21 +160,9 @@ function updateParagraphScoreDisplay() {
   `;
 }
 
-// Initialize the quiz
-function initQuiz() {
+// Initialize the quiz and paragraph practice
+document.addEventListener("DOMContentLoaded", () => {
   shuffleQuestions(questionPool);
   loadQuestion();
-  updateQuizScoreDisplay();
-
-  document.getElementById("next-paragraph").addEventListener("click", loadParagraph);
-}
-
-// Initialize paragraph practice
-function initParagraphPractice() {
   loadParagraph();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  initQuiz();
-  initParagraphPractice();
 });
