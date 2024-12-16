@@ -19,36 +19,34 @@
       </div>
       <p id="progress-label">Progress: 0% (Por: 0, Para: 0) | Streak: 0</p>
 
-      <!-- Quiz Question Section -->
+      <!-- Quiz Score Display -->
+      <div id="quiz-score">
+        <p style="color: green;">Correct: 0</p>
+        <p style="color: red;">Incorrect: 0</p>
+      </div>
+
+      <!-- Quiz Questions Container -->
       <div id="questions-container"></div>
 
-      <!-- Feedback for the quiz -->
+      <!-- Feedback for each question -->
       <p id="feedback"></p>
 
       <!-- Result output -->
       <div id="result"></div>
 
-      <!-- Paragraph Practice Section -->
+      <!-- Paragraph Section -->
       <div id="paragraph-section">
         <h2>Paragraph Practice</h2>
         <div id="paragraph-container"></div>
         <p id="paragraph-feedback"></p>
         <button id="next-paragraph" style="display: none;">Next Paragraph</button>
+
+        <!-- Paragraph Score Display -->
+        <div id="paragraph-score">
+          <p style="color: green;">Correct: 0</p>
+          <p style="color: red;">Incorrect: 0</p>
+        </div>
       </div>
-      <!-- Quiz Section -->
-<!-- Quiz Score Display -->
-<div id="quiz-score"></div>
-
-<!-- Paragraph Section -->
-<div id="paragraph-section">
-  <h2>Paragraph Practice</h2>
-  <div id="paragraph-container"></div>
-  <p id="paragraph-feedback"></p>
-  <button id="next-paragraph" style="display: none;">Next Paragraph</button>
-  <div id="paragraph-score"></div>
-</div>
-
-
     </main>
     <footer>
       <p>Keep practicing and mastering Por vs Para!</p>
@@ -56,8 +54,6 @@
   </div>
 
   <script src="questions.js"></script>
-<script src="script.js"></script>
-<link rel="stylesheet" href="styles.css">
-
+  <script src="script.js"></script>
 </body>
 </html>
