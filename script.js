@@ -1,16 +1,17 @@
+// Variables for tracking scores and progress
 let currentIndex = 0;
 let totalScore = 0;
 let porCorrect = 0;
 let paraCorrect = 0;
-let streak = 0;
 let quizCorrectAnswers = 0;
 let quizIncorrectAnswers = 0;
 let paragraphCorrectAnswers = 0;
 let paragraphIncorrectAnswers = 0;
-let incorrectAnswers = [];
 let paragraphIndex = 0;
+let incorrectAnswers = [];
+let streak = 0;
 
-// Shuffle questions on page load
+// Shuffle the questions on page load
 function shuffleQuestions(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -44,7 +45,7 @@ function loadQuestion() {
   document.getElementById("submit-btn").addEventListener("click", evaluateAnswer);
 }
 
-// Evaluate quiz answer
+// Evaluate the quiz answer
 function evaluateAnswer() {
   const currentQuestion = questionPool[currentIndex];
   const selectedOption = document.querySelector('input[name="answer"]:checked');
@@ -59,8 +60,8 @@ function evaluateAnswer() {
   if (selectedOption.value === currentQuestion.correct) {
     feedback.textContent = `Correct! ${currentQuestion.rationale}`;
     feedback.style.color = "green";
-    totalScore++;
     quizCorrectAnswers++;
+    totalScore++;
     streak++;
     if (currentQuestion.correct === "por") porCorrect++;
     if (currentQuestion.correct === "para") paraCorrect++;
