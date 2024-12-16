@@ -1,11 +1,19 @@
-console.log("Loaded question pool:", questionPool);
-// Tracking variables
 let currentIndex = 0;
 let totalScore = 0;
 let porCorrect = 0;
 let paraCorrect = 0;
+let streak = 0;
+let incorrectAnswers = [];
 
-// Function to load the current question
+// Shuffle questions on page load
+function shuffleQuestions(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Load the current question
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = ""; // Clear previous question
@@ -13,21 +21,7 @@ function loadQuestion() {
   // Check if there are no more questions
   if (currentIndex >= questionPool.length) {
     document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${questionPool.length}.`;
-    updateProgressBar();
-
-    // Add Restart Button
-    const restartButton = document.createElement("button");
-    restartButton.innerText = "Restart Quiz";
-    restartButton.addEventListener("click", () => {
-      currentIndex = 0;
-      totalScore = 0;
-      porCorrect = 0;
-      paraCorrect = 0;
-      loadQuestion();
-      updateProgressBar();
-    });
-    quizContainer.appendChild(restartButton);
-
+    showReview(); // Display review section
     return;
   }
 
@@ -40,15 +34,13 @@ function loadQuestion() {
     <input type="radio" id="option-por" name="answer" value="por"> <label for="option-por">Por</label><br>
     <input type="radio" id="option-para" name="answer" value="para"> <label for="option-para">Para</label><br><br>
     <button id="submit-btn">Submit</button>
-    <p id="feedback" class="feedback"></p>
   `;
   quizContainer.appendChild(div);
 
-  // Add event listener to the submit button
   document.getElementById("submit-btn").addEventListener("click", evaluateAnswer);
 }
 
-// Function to evaluate the answer
+// Evaluate the user's answer
 function evaluateAnswer() {
   const currentQuestion = questionPool[currentIndex];
   const selectedOption = document.querySelector('input[name="answer"]:checked');
@@ -60,51 +52,58 @@ function evaluateAnswer() {
     return;
   }
 
-  // Check the answer
   if (selectedOption.value === currentQuestion.correct) {
-    totalScore++;
-    if (currentQuestion.correct === "por") porCorrect++;
-    if (currentQuestion.correct === "para") paraCorrect++;
     feedback.textContent = `Correct! ${currentQuestion.rationale}`;
     feedback.style.color = "green";
+    totalScore++;
+    streak++;
+    if (currentQuestion.correct === "por") porCorrect++;
+    if (currentQuestion.correct === "para") paraCorrect++;
   } else {
     feedback.textContent = `Incorrect. ${currentQuestion.rationale}`;
     feedback.style.color = "red";
+    streak = 0; // Reset streak on incorrect answer
+    incorrectAnswers.push(currentQuestion); // Track incorrect answers
   }
 
-  // Update progress and add Next Question button
-  currentIndex++;
   updateProgressBar();
-  const nextButton = document.createElement("button");
-  nextButton.innerText = "Next Question";
-  nextButton.addEventListener("click", loadQuestion);
-  document.getElementById("questions-container").appendChild(nextButton);
-}
 
-// Function to update the progress bar
-function updateProgressBar() {
-  const progressContainer = document.getElementById("progress-container");
-  const totalProgress = Math.round((currentIndex / questionPool.length) * 100);
-  const porProgress = Math.round((porCorrect / questionPool.length) * 100);
-  const paraProgress = Math.round((paraCorrect / questionPool.length) * 100);
-
-  progressContainer.innerHTML = `
-    <div id="por-progress" style="width: ${porProgress}%; background-color: #0077cc;"></div>
-    <div id="para-progress" style="width: ${paraProgress}%; background-color: #28a745;"></div>
-  `;
-
-  document.getElementById("progress-label").innerText = `Progress: ${totalProgress}% (Por: ${porCorrect}, Para: ${paraCorrect})`;
-}
-
-// Initialize the quiz after dynamically loading the question pool
-function initQuiz() {
-  console.log("Initializing the quiz...");
-  if (typeof questionPool !== "undefined") {
+  // Delay and then load the next question
+  setTimeout(() => {
+    currentIndex++;
     loadQuestion();
-    updateProgressBar();
-  } else {
-    console.error("Question pool is not loaded. Please ensure questions.js is included.");
-  }
+  }, 5000); // Feedback persists for 5 seconds
+}
+
+// Update the progress bar
+function updateProgressBar() {
+  const progressContainer = document.getElementById("progress-bar");
+  const totalProgress = Math.round((currentIndex / questionPool.length) * 100);
+  progressContainer.style.width = `${totalProgress}%`;
+
+  document.getElementById("progress-label").innerText = `Progress: ${totalProgress}% (Por: ${porCorrect}, Para: ${paraCorrect}) | Streak: ${streak}`;
+}
+
+// Show a review of incorrect answers
+function showReview() {
+  const quizContainer = document.getElementById("questions-container");
+  quizContainer.innerHTML = "<h2>Review Incorrect Answers</h2>";
+
+  incorrectAnswers.forEach((question, index) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <p>${index + 1}. ${question.question}</p>
+      <p><strong>Correct Answer:</strong> ${question.correct}</p>
+      <p><strong>Explanation:</strong> ${question.rationale}</p>
+    `;
+    quizContainer.appendChild(div);
+  });
+}
+
+// Initialize the quiz
+function initQuiz() {
+  shuffleQuestions(questionPool); // Shuffle questions on load
+  loadQuestion(); // Load the first question
 }
 
 document.addEventListener("DOMContentLoaded", initQuiz);
