@@ -9,7 +9,7 @@ let paragraphCorrectAnswers = 0;
 let paragraphIncorrectAnswers = 0;
 let paragraphIndex = 0;
 
-// Shuffle questions on page load
+// Shuffle the questions on page load
 function shuffleQuestions(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
