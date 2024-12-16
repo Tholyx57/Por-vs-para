@@ -1,15 +1,12 @@
-// Variables for tracking scores and progress
 let currentIndex = 0;
 let totalScore = 0;
-let porCorrect = 0;
-let paraCorrect = 0;
-let quizCorrectAnswers = 0;
-let quizIncorrectAnswers = 0;
-let paragraphCorrectAnswers = 0;
-let paragraphIncorrectAnswers = 0;
+let correctAnswers = 0;
+let incorrectAnswers = 0;
+let streak = 0;
+let difficulty = "easy"; // Start with easy questions
 let paragraphIndex = 0;
 
-// Shuffle the questions on page load
+// Shuffle questions
 function shuffleQuestions(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -17,23 +14,26 @@ function shuffleQuestions(array) {
   }
 }
 
-// Load the current quiz question
+// Load the current question based on difficulty
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = "";
 
-  if (currentIndex >= questionPool.length) {
-    document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${questionPool.length}.`;
+  const filteredQuestions = questionPool.filter(q => q.difficulty === difficulty);
+
+  if (currentIndex >= filteredQuestions.length) {
+    document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${filteredQuestions.length}.`;
     return;
   }
 
-  const currentQuestion = questionPool[currentIndex];
+  const currentQuestion = filteredQuestions[currentIndex];
   const div = document.createElement("div");
   div.classList.add("quiz-question");
   div.innerHTML = `
     <p>${currentQuestion.question}</p>
-    <input type="radio" id="option-por" name="answer" value="por"> <label for="option-por">Por</label><br>
-    <input type="radio" id="option-para" name="answer" value="para"> <label for="option-para">Para</label><br><br>
+    <input type="radio" id="option-a" name="answer" value="${currentQuestion.options[0]}"> <label for="option-a">${currentQuestion.options[0]}</label><br>
+    <input type="radio" id="option-b" name="answer" value="${currentQuestion.options[1]}"> <label for="option-b">${currentQuestion.options[1]}</label><br>
+    <input type="radio" id="option-c" name="answer" value="${currentQuestion.options[2]}"> <label for="option-c">${currentQuestion.options[2]}</label><br><br>
     <button id="submit-btn">Submit</button>
     <p id="feedback" class="feedback"></p>
   `;
@@ -42,9 +42,10 @@ function loadQuestion() {
   document.getElementById("submit-btn").addEventListener("click", evaluateAnswer);
 }
 
-// Evaluate the quiz answer
+// Evaluate the answer
 function evaluateAnswer() {
-  const currentQuestion = questionPool[currentIndex];
+  const filteredQuestions = questionPool.filter(q => q.difficulty === difficulty);
+  const currentQuestion = filteredQuestions[currentIndex];
   const selectedOption = document.querySelector('input[name="answer"]:checked');
   const feedback = document.getElementById("feedback");
 
@@ -55,36 +56,53 @@ function evaluateAnswer() {
   }
 
   if (selectedOption.value === currentQuestion.correct) {
-    feedback.textContent = `Correct! ${currentQuestion.rationale}`;
+    feedback.textContent = `Correct! ${currentQuestion.explanations[currentQuestion.correct]}`;
     feedback.style.color = "green";
-    quizCorrectAnswers++;
     totalScore++;
-    if (currentQuestion.correct === "por") porCorrect++;
-    if (currentQuestion.correct === "para") paraCorrect++;
+    correctAnswers++;
+    streak++;
   } else {
-    feedback.textContent = `Incorrect. ${currentQuestion.rationale}`;
+    feedback.textContent = `Incorrect. ${currentQuestion.explanations[selectedOption.value]} \n The correct answer is: ${currentQuestion.correct}. ${currentQuestion.explanations[currentQuestion.correct]}`;
     feedback.style.color = "red";
-    quizIncorrectAnswers++;
+    streak = 0;
+    incorrectAnswers++;
   }
 
-  updateQuizScoreDisplay();
+  adjustDifficulty();
 
   setTimeout(() => {
     currentIndex++;
     loadQuestion();
-  }, 3000);
+  }, 5000);
+}
+
+// Adjust difficulty based on performance
+function adjustDifficulty() {
+  if (streak >= 3 && difficulty === "easy") {
+    difficulty = "medium";
+    streak = 0; // Reset streak for the new difficulty
+  } else if (streak >= 3 && difficulty === "medium") {
+    difficulty = "hard";
+    streak = 0;
+  } else if (streak === 0 && difficulty === "hard") {
+    difficulty = "medium";
+  } else if (streak === 0 && difficulty === "medium") {
+    difficulty = "easy";
+  }
+
+  updateQuizScoreDisplay();
 }
 
 // Update quiz score display
 function updateQuizScoreDisplay() {
   const quizScoreContainer = document.getElementById("quiz-score");
   quizScoreContainer.innerHTML = `
-    <p style="color: green;">Correct: ${quizCorrectAnswers}</p>
-    <p style="color: red;">Incorrect: ${quizIncorrectAnswers}</p>
+    <p style="color: green;">Correct: ${correctAnswers}</p>
+    <p style="color: red;">Incorrect: ${incorrectAnswers}</p>
   `;
 }
 
-// Load paragraph practice
+// Paragraph Practice
 function loadParagraph() {
   const paragraphContainer = document.getElementById("paragraph-container");
   const feedback = document.getElementById("paragraph-feedback");
@@ -104,7 +122,7 @@ function loadParagraph() {
   currentParagraph.answers.forEach((_, index) => {
     html += `
       <label for="answer-${index}">Blank ${index + 1}: </label>
-      <input type="text" id="answer-${index}" placeholder="por/para"><br>
+      <input type="text" id="answer-${index}" placeholder="ser/estar or saber/conocer"><br>
     `;
   });
   html += `<button id="submit-paragraph">Submit</button>`;
@@ -160,7 +178,7 @@ function updateParagraphScoreDisplay() {
   `;
 }
 
-// Initialize the quiz and paragraph practice
+// Initialize quiz and paragraph practice
 document.addEventListener("DOMContentLoaded", () => {
   shuffleQuestions(questionPool);
   loadQuestion();
