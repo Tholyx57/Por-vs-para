@@ -27,8 +27,7 @@ const questionPool = [
     category: "Destination",
     difficulty: "easy"
   }
-  // Add more questions here
-];
+
 
 const paragraphPool = [
   {
