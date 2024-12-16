@@ -157,7 +157,6 @@ function evaluateParagraph() {
   });
 }
 
-// Initialize
 function initQuiz() {
   shuffleQuestions(questionPool);
   loadQuestion();
