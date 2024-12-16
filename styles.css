@@ -71,3 +71,42 @@ footer {
   margin-top: 20px;
   font-size: 12px;
 }
+/* Paragraph Practice Section */
+#paragraph-section {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f0f8ff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+#paragraph-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #0056b3;
+}
+
+#paragraph-container {
+  margin-top: 15px;
+}
+
+#paragraph-feedback {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+#next-paragraph {
+  margin-top: 15px;
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#next-paragraph:hover {
+  background-color: #218838;
+}
