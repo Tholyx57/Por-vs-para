@@ -1,3 +1,4 @@
+console.log("Paragraph Pool:", paragraphPool);
 let currentIndex = 0;
 let totalScore = 0;
 let porCorrect = 0;
