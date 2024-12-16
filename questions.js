@@ -243,7 +243,7 @@ const questionPool = [
   question: "Este tren va ___ Sevilla y sale en 15 minutos.",
   correct: "para",
   rationale: "Para is used to indicate destination (the train is going to Seville)."
-}
+},
 ];
 
 const paragraphPool = [
