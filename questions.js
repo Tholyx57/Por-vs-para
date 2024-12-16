@@ -243,7 +243,188 @@ const questionPool = [
   question: "Este tren va ___ Sevilla y sale en 15 minutos.",
   correct: "para",
   rationale: "Para is used to indicate destination (the train is going to Seville)."
-},
+},  {
+    question: "La sopa ___ caliente porque acaba de salir de la olla.",
+    correct: "está",
+    options: ["es", "está", "será"],
+    rationale: {
+      es: "Incorrect. 'Es' is used for permanent characteristics, but the soup being hot is a temporary state.",
+      está: "Correct! 'Está' is used for temporary states or conditions.",
+      será: "Incorrect. 'Será' refers to a future state, which is not implied in this sentence."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "easy"
+  },
+  {
+    question: "Mi amiga ___ doctora y trabaja en un hospital.",
+    correct: "es",
+    options: ["es", "está", "era"],
+    rationale: {
+      es: "Correct! 'Es' is used for professions, which are considered permanent characteristics.",
+      está: "Incorrect. 'Está' is used for temporary states, not for professions.",
+      era: "Incorrect. 'Era' indicates the past tense, but the context is present."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "easy"
+  },
+  {
+    question: "La reunión ___ en la oficina principal a las 2 p.m.",
+    correct: "es",
+    options: ["es", "está", "fue"],
+    rationale: {
+      es: "Correct! 'Es' is used to indicate events, such as meetings.",
+      está: "Incorrect. 'Está' is used for the location of objects or people, not events.",
+      fue: "Incorrect. 'Fue' refers to the past tense, but the context is present."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "medium"
+  },
+  {
+    question: "Mis hermanos ___ cansados después de correr 10 kilómetros.",
+    correct: "están",
+    options: ["son", "están", "serán"],
+    rationale: {
+      son: "Incorrect. 'Son' implies a permanent characteristic, but being tired is temporary.",
+      están: "Correct! 'Están' is used for temporary states, such as being tired.",
+      serán: "Incorrect. 'Serán' indicates the future tense, which is not relevant here."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "easy"
+  },
+  {
+    question: "Este café ___ de Colombia.",
+    correct: "es",
+    options: ["es", "está", "fue"],
+    rationale: {
+      es: "Correct! 'Es' is used to indicate origin.",
+      está: "Incorrect. 'Está' is used for temporary states, not for origin.",
+      fue: "Incorrect. 'Fue' is past tense, but the context is present."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "medium"
+  },
+  {
+    question: "Hoy ___ muy nublado y frío.",
+    correct: "está",
+    options: ["es", "está", "será"],
+    rationale: {
+      es: "Incorrect. 'Es' is used for permanent traits, not temporary weather conditions.",
+      está: "Correct! 'Está' is used for temporary states, like the weather today.",
+      será: "Incorrect. 'Será' indicates the future tense, not the present."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "easy"
+  },
+  {
+    question: "Las llaves ___ en la mesa.",
+    correct: "están",
+    options: ["son", "están", "eran"],
+    rationale: {
+      son: "Incorrect. 'Son' is used for permanent traits, but this is about the location of keys.",
+      están: "Correct! 'Están' is used for the location of objects.",
+      eran: "Incorrect. 'Eran' is past tense, but the context is present."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "medium"
+  },
+  {
+    question: "Este libro ___ mío.",
+    correct: "es",
+    options: ["es", "está", "fue"],
+    rationale: {
+      es: "Correct! 'Es' is used for possession.",
+      está: "Incorrect. 'Está' is used for temporary states, not ownership.",
+      fue: "Incorrect. 'Fue' refers to the past tense, but the context is present."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "easy"
+  },
+  {
+    question: "Mi abuela ___ joven en espíritu, aunque tiene 80 años.",
+    correct: "es",
+    options: ["es", "está", "será"],
+    rationale: {
+      es: "Correct! 'Es' is used for inherent or defining characteristics.",
+      está: "Incorrect. 'Está' is used for temporary states, not permanent traits.",
+      será: "Incorrect. 'Será' is future tense, not relevant here."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "medium"
+  },
+  {
+    question: "El concierto ___ a las 7 de la noche en el teatro principal.",
+    correct: "es",
+    options: ["es", "está", "fue"],
+    rationale: {
+      es: "Correct! 'Es' is used to indicate events, such as concerts.",
+      está: "Incorrect. 'Está' is used for location, but this is about the event itself.",
+      fue: "Incorrect. 'Fue' refers to the past tense, not present."
+    },
+    category: "Ser vs. Estar",
+    difficulty: "medium"
+  },
+
+  // Conocer vs. Saber Questions
+  {
+    question: "¿___ dónde está la biblioteca?",
+    correct: "sabes",
+    options: ["conoces", "sabes", "sabías"],
+    rationale: {
+      conoces: "Incorrect. 'Conocer' is used for familiarity with places or people, not information.",
+      sabes: "Correct! 'Saber' is used for knowing information.",
+      sabías: "Incorrect. 'Sabías' refers to the past tense, but the context is present."
+    },
+    category: "Conocer vs. Saber",
+    difficulty: "easy"
+  },
+  {
+    question: "Yo no ___ a tu hermano, pero he oído hablar de él.",
+    correct: "conozco",
+    options: ["sé", "conozco", "conocía"],
+    rationale: {
+      sé: "Incorrect. 'Saber' is for information, not familiarity with people.",
+      conozco: "Correct! 'Conocer' is used for being familiar with someone.",
+      conocía: "Incorrect. 'Conocía' is past tense, but the context is present."
+    },
+    category: "Conocer vs. Saber",
+    difficulty: "medium"
+  },
+  {
+    question: "Nosotros ___ cocinar muy bien.",
+    correct: "sabemos",
+    options: ["sabemos", "conocemos", "supimos"],
+    rationale: {
+      sabemos: "Correct! 'Saber' is used for skills or abilities.",
+      conocemos: "Incorrect. 'Conocer' is not used for skills.",
+      supimos: "Incorrect. 'Supimos' is past tense, but the context is present."
+    },
+    category: "Conocer vs. Saber",
+    difficulty: "easy"
+  },
+  {
+    question: "¿Tú ___ a la familia de Pedro?",
+    correct: "conoces",
+    options: ["sabes", "conoces", "conociste"],
+    rationale: {
+      sabes: "Incorrect. 'Saber' is used for information, not familiarity with people.",
+      conoces: "Correct! 'Conocer' is used for being familiar with someone.",
+      conociste: "Incorrect. 'Conociste' is past tense, but the context is present."
+    },
+    category: "Conocer vs. Saber",
+    difficulty: "easy"
+  },
+  {
+    question: "Ellos ___ que necesitamos más tiempo para el proyecto.",
+    correct: "saben",
+    options: ["conocen", "saben", "sabían"],
+    rationale: {
+      conocen: "Incorrect. 'Conocer' is for familiarity, not facts or information.",
+      saben: "Correct! 'Saber' is used for knowing information.",
+      sabían: "Incorrect. 'Sabían' is past tense, but the context is present."
+    },
+    category: "Conocer vs. Saber",
+    difficulty: "medium"
+  },
 ];
 
 const paragraphPool = [
