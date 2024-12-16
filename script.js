@@ -1,4 +1,3 @@
-console.log("Paragraph Pool:", paragraphPool);
 let currentIndex = 0;
 let totalScore = 0;
 let porCorrect = 0;
@@ -98,71 +97,7 @@ function showReview() {
 
 // Paragraph Practice
 function loadParagraph() {
+  console.log("Loading paragraph:", paragraphIndex); // Debugging check
   const paragraphContainer = document.getElementById("paragraph-container");
   const feedback = document.getElementById("paragraph-feedback");
-  const nextButton = document.getElementById("next-paragraph");
-
-  paragraphContainer.innerHTML = "";
-  feedback.textContent = "";
-  nextButton.style.display = "none";
-
-  if (paragraphIndex >= paragraphPool.length) {
-    paragraphContainer.innerHTML = "<p>You've completed all paragraph practice questions!</p>";
-    return;
-  }
-
-  const currentParagraph = paragraphPool[paragraphIndex];
-  let html = `<p>${currentParagraph.text}</p>`;
-  currentParagraph.answers.forEach((_, index) => {
-    html += `
-      <label for="answer-${index}">Blank ${index + 1}: </label>
-      <input type="text" id="answer-${index}" placeholder="por/para"><br>
-    `;
-  });
-  html += `<button id="submit-paragraph">Submit</button>`;
-  paragraphContainer.innerHTML = html;
-
-  document.getElementById("submit-paragraph").addEventListener("click", evaluateParagraph);
-}
-
-function evaluateParagraph() {
-  const currentParagraph = paragraphPool[paragraphIndex];
-  const feedback = document.getElementById("paragraph-feedback");
-  const nextButton = document.getElementById("next-paragraph");
-  let isCorrect = true;
-
-  currentParagraph.answers.forEach((answer, index) => {
-    const userAnswer = document.getElementById(`answer-${index}`).value.trim().toLowerCase();
-    if (userAnswer === answer) {
-      document.getElementById(`answer-${index}`).style.borderColor = "green";
-    } else {
-      document.getElementById(`answer-${index}`).style.borderColor = "red";
-      isCorrect = false;
-    }
-  });
-
-  if (isCorrect) {
-    feedback.textContent = "Correct! Great job!";
-    feedback.style.color = "green";
-  } else {
-    feedback.textContent = "Incorrect. Here are the explanations:";
-    feedback.style.color = "red";
-    const rationaleList = currentParagraph.rationales.map((rationale, index) => `<li>${rationale}</li>`).join("");
-    feedback.innerHTML += `<ul>${rationaleList}</ul>`;
-  }
-
-  nextButton.style.display = "block";
-  nextButton.addEventListener("click", () => {
-    paragraphIndex++;
-    loadParagraph();
-  });
-}
-
-function initQuiz() {
-  shuffleQuestions(questionPool);
-  loadQuestion();
-
-  document.getElementById("next-paragraph").addEventListener("click", loadParagraph);
-}
-
-document.addEventListener("DOMContentLoaded", initQuiz);
+  const nextButton = document.getElement
