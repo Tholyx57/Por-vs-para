@@ -3,7 +3,8 @@ const questionPool = [
     question: "Caminamos ___ el parque para disfrutar el buen clima.",
     correct: "por",
     rationale: "Por is used for movement through or along a space, such as a park. It describes the route taken.",
-  },{
+  }
+  ,{
   question: "Estudié mucho ___ aprobar el examen de historia.",
   correct: "para",
   rationale: "Para is used to express purpose (passing the exam)."
