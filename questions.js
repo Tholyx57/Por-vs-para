@@ -29,3 +29,15 @@ const questionPool = [
   },
   // Add more questions with `category` and `difficulty` as needed
 ];
+const paragraphPool = [
+  {
+    text: "Fui al mercado ___ comprar frutas frescas. Caminamos ___ el parque ___ llegar a casa.",
+    answers: ["para", "por", "para"],
+    rationales: [
+      "Para is used to express purpose, buying fresh fruits.",
+      "Por is used for movement through a space, the park.",
+      "Para is used to express purpose, arriving home."
+    ]
+  },
+  // Add more paragraphs as needed
+];
