@@ -39,8 +39,6 @@ const paragraphPool = [
       "Para is used to express purpose, arriving home."
     ]
   },
-  // Add more paragraphs as needed
-const additionalParagraphs = [
   {
     text: "Fui al supermercado ___ comprar pan y queso. Caminamos ___ el parque ___ llegar a casa.",
     answers: ["para", "por", "para"],
