@@ -158,10 +158,12 @@ function evaluateParagraph() {
 }
 
 function initQuiz() {
-  shuffleQuestions(questionPool);
-  loadQuestion();
+  shuffleQuestions(questionPool); // Shuffle the quiz questions
+  loadQuestion(); // Load the first question of the quiz
 
-  document.getElementById("next-paragraph").addEventListener("click", loadParagraph);
+  // Initialize the paragraph practice section
+  loadParagraph();
 }
 
 document.addEventListener("DOMContentLoaded", initQuiz);
+
