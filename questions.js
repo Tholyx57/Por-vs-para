@@ -1,4 +1,3 @@
-// Quiz Question Pool
 const questionPool = [
   {
     question: "Caminamos ___ el parque para disfrutar el buen clima.",
@@ -28,10 +27,9 @@ const questionPool = [
     category: "Destination",
     difficulty: "easy"
   }
-  // Add more questions as needed
+  // Add more questions here
 ];
 
-// Paragraph Practice Pool
 const paragraphPool = [
   {
     text: "Fui al mercado ___ comprar frutas frescas. Caminamos ___ el parque ___ llegar a casa.",
@@ -48,14 +46,6 @@ const paragraphPool = [
     rationales: [
       "Por is used to express gratitude.",
       "Para is used to indicate the recipient of the gift (you)."
-    ]
-  },
-  {
-    text: "Salimos temprano ___ evitar el tráfico. Viajamos ___ la autopista y llegamos a tiempo.",
-    answers: ["para", "por"],
-    rationales: [
-      "Para is used to express purpose (avoiding traffic).",
-      "Por is used for movement along a route (the highway)."
     ]
   }
   // Add more paragraphs as needed
