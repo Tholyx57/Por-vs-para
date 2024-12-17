@@ -74,6 +74,8 @@ function evaluateAnswer(selectedOption, question) {
 
 function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
+  const feedback = document.getElementById("feedback");
+  feedback.textContent = ""; // Clear any lingering feedback
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
     <p>Your Score: <span style="color: green;">${totalScore}</span> / ${currentIndex}</p>
