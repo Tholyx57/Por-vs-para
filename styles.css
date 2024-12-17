@@ -143,13 +143,15 @@ button:hover {
   background-color: #add8e6;
 }
 
-button.selected {
-  background-color: #0077cc;
-  color: white;
+.paragraph-button {
+  margin: 5px;
 }
 
-.paragraph-button {
-  margin-right: 10px;
+.blank {
+  color: black;
+  font-weight: bold;
+  padding: 0 5px;
 }
+
 
 
