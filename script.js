@@ -42,14 +42,16 @@ function evaluateQuizAnswer(answer) {
   const currentQuestion = questionPool[currentIndex];
   const feedback = document.getElementById("feedback");
 
+  // Check correctness
   if (answer === currentQuestion.correct) {
     totalScore++;
     feedback.innerHTML = `<p style="color: green;">Correct! ${currentQuestion.rationale}</p>`;
   } else {
-    feedback.innerHTML = `<p style="color: red;">Incorrect. ${currentQuestion.rationale}</p>`;
+    feedback.innerHTML = `<p style="color: red;">Incorrect. Correct Answer: <strong>${currentQuestion.correct}</strong><br>${currentQuestion.rationale}</p>`;
     incorrectAnswers.push(currentQuestion);
   }
 
+  // Move to next question after 2 seconds
   setTimeout(() => {
     currentIndex++;
     loadQuestion();
