@@ -99,53 +99,76 @@ function loadParagraph() {
   if (paragraphIndex >= paragraphPool.length) {
     paragraphContainer.innerHTML = `
       <h2>Paragraph Practice Complete!</h2>
-      <p style="color: green;">Correct: ${paragraphCorrect}</p>
-      <p style="color: red;">Incorrect: ${paragraphIncorrect}</p>
+      <p>Correct: <span style="color: green;">${paragraphCorrect}</span></p>
+      <p>Incorrect: <span style="color: red;">${paragraphIncorrect}</span></p>
     `;
     return;
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
-  let html = `<p style="font-size: 1.2em;">${currentParagraph.text.replace(/___/g, '___')}</p>`;
+  let html = `<p>${currentParagraph.text}</p>`;
 
-  // Create answer buttons for each blank
-  currentParagraph.answers.forEach((answer, index) => {
+  // Add buttons for each blank
+  currentParagraph.answers.forEach((_, index) => {
     html += `
-      <div style="margin: 10px;">
-        <label><strong>Blank ${index + 1}:</strong></label>
-        <button style="padding: 10px; font-size: 1.2em;" onclick="checkParagraphAnswer('${answer}', ${index}, '${currentParagraph.options.join(',')}')">
-          ${currentParagraph.options[0]}
-        </button>
-        <button style="padding: 10px; font-size: 1.2em;" onclick="checkParagraphAnswer('${answer}', ${index}, '${currentParagraph.options.join(',')}')">
-          ${currentParagraph.options[1]}
-        </button>
+      <div>
+        <strong>Blank ${index + 1}:</strong>
+        ${currentParagraph.options.map(
+          (option) =>
+            `<button onclick="selectParagraphAnswer(${index}, '${option}')" id="btn-${index}-${option}">${option}</button>`
+        ).join(" ")}
       </div>
     `;
   });
 
+  html += `<button id="submit-paragraph">Submit</button>`;
   paragraphContainer.innerHTML = html;
+
+  document.getElementById("submit-paragraph").addEventListener("click", evaluateParagraphAnswer);
 }
 
-function checkParagraphAnswer(correctAnswer, index) {
-  const feedback = document.getElementById("paragraph-feedback");
-  const clickedButton = event.target;
+let selectedAnswers = {};
 
-  if (clickedButton.textContent === correctAnswer) {
-    clickedButton.style.backgroundColor = "green";
+function selectParagraphAnswer(blankIndex, answer) {
+  selectedAnswers[blankIndex] = answer;
+
+  // Highlight selected button
+  const buttons = document.querySelectorAll(`[id^="btn-${blankIndex}-"]`);
+  buttons.forEach((btn) => btn.style.backgroundColor = "");
+  document.getElementById(`btn-${blankIndex}-${answer}`).style.backgroundColor = "#0077cc";
+}
+
+function evaluateParagraphAnswer() {
+  const currentParagraph = paragraphPool[paragraphIndex];
+  const feedback = document.getElementById("paragraph-feedback");
+  let isCorrect = true;
+
+  currentParagraph.answers.forEach((answer, index) => {
+    if (selectedAnswers[index] === answer) {
+      isCorrect = isCorrect && true;
+    } else {
+      isCorrect = false;
+    }
+  });
+
+  if (isCorrect) {
     feedback.innerHTML = `<p style="color: green;">Correct!</p>`;
     paragraphCorrect++;
   } else {
-    clickedButton.style.backgroundColor = "red";
-    feedback.innerHTML = `<p style="color: red;">Incorrect! Correct answer: <strong>${correctAnswer}</strong></p>`;
+    feedback.innerHTML = `<p style="color: red;">Incorrect. Explanations:</p>`;
+    const rationaleList = currentParagraph.rationales.map(r => `<li>${r}</li>`).join("");
+    feedback.innerHTML += `<ul>${rationaleList}</ul>`;
     paragraphIncorrect++;
   }
 
   document.getElementById("next-paragraph").style.display = "block";
   document.getElementById("next-paragraph").onclick = () => {
     paragraphIndex++;
+    selectedAnswers = {};
     loadParagraph();
   };
 }
+
 
 // ========================= INITIALIZATION =========================
 function initQuiz() {
