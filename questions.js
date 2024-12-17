@@ -52,10 +52,9 @@ const questionPool = [
     options: ["sé", "conozco"],
     rationale: "Conocer is used for being familiar with someone.",
     category: "Conocer vs. Saber",
-  },
+  }
 ];
 
-// Paragraph Pool
 const paragraphPool = [
   // Por vs Para Paragraphs
   {
@@ -89,5 +88,5 @@ const paragraphPool = [
       "Sé is used for knowing specific information (the names of streets).",
     ],
     category: "Conocer vs. Saber",
-  },
+  }
 ];
