@@ -52,7 +52,7 @@ const questionPool = [
     options: ["sé", "conozco"],
     rationale: "Conocer is used for being familiar with someone.",
     category: "Conocer vs. Saber",
-  }// Por vs. Para Questions
+  },
 {
   question: "El proyecto fue cancelado ___ falta de fondos suficientes, pero esperamos reanudarlo pronto.",
   correct: "por",
