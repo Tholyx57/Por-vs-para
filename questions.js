@@ -60,10 +60,21 @@ const paragraphPool = [
   {
     text: "Fui al supermercado ___ comprar pan y leche. Caminamos ___ el parque ___ llegar al otro lado de la ciudad.",
     answers: ["para", "por", "para"],
+    options: ["por", "para"],
     rationales: [
       "Para is used to express purpose (buying bread and milk).",
       "Por is used for movement through a space (the park).",
       "Para is used to express purpose (arriving at the other side of the city).",
+    ],
+    category: "Por vs. Para",
+  },
+  {
+    text: "Gracias ___ traerme este regalo tan especial. Caminamos juntos ___ la playa mientras hablábamos de nuestra infancia.",
+    answers: ["por", "por"],
+    options: ["por", "para"],
+    rationales: [
+      "Por is used to express gratitude.",
+      "Por is used for movement along a space (the beach).",
     ],
     category: "Por vs. Para",
   },
@@ -72,9 +83,20 @@ const paragraphPool = [
   {
     text: "Mi amigo Juan ___ de Colombia, pero ahora ___ viviendo en México.",
     answers: ["es", "está"],
+    options: ["es", "está"],
     rationales: [
       "Es is used for origin, a permanent trait.",
       "Está is used for temporary states, like living in Mexico temporarily.",
+    ],
+    category: "Ser vs. Estar",
+  },
+  {
+    text: "Las flores ___ muy bonitas hoy porque ___ frescas.",
+    answers: ["están", "están"],
+    options: ["es", "está", "son", "están"],
+    rationales: [
+      "Están is used for temporary states, like the flowers being pretty today.",
+      "Están is used for the temporary freshness of the flowers.",
     ],
     category: "Ser vs. Estar",
   },
@@ -83,10 +105,21 @@ const paragraphPool = [
   {
     text: "Yo ___ muy bien esta ciudad porque he vivido aquí muchos años. Además, ___ el nombre de todas las calles.",
     answers: ["conozco", "sé"],
+    options: ["conozco", "sé"],
     rationales: [
       "Conozco is used for familiarity with a place (the city).",
       "Sé is used for knowing specific information (the names of streets).",
     ],
     category: "Conocer vs. Saber",
-  }
+  },
+  {
+    text: "Ellos ___ hablar francés perfectamente, pero no ___ a nadie de Francia.",
+    answers: ["saben", "conocen"],
+    options: ["saben", "conocen"],
+    rationales: [
+      "Saben is used for skills or abilities, like speaking French.",
+      "Conocen is used for familiarity with people, like people from France.",
+    ],
+    category: "Conocer vs. Saber",
+  },
 ];
