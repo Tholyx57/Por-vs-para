@@ -37,13 +37,13 @@ header {
 }
 
 header h1 {
-  font-size: 1.5rem; /* Same size as buttons and text */
+  font-size: 1.1rem; /* Same size as buttons and text */
   color: #0077cc;
   margin-bottom: 10px;
 }
 
 header p {
-  font-size: 1.1rem; /* Same size */
+  font-size: 1.1rem;
   color: #666;
 }
 
@@ -54,7 +54,7 @@ header p {
 }
 
 .quiz-question p, #paragraph-container p {
-  font-size: 1.1rem; /* Same size */
+  font-size: 1.1rem;
   margin-bottom: 15px;
   color: #333;
 }
@@ -68,7 +68,7 @@ button {
   margin: 5px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.1rem; /* Same size as all text */
+  font-size: 1.1rem;
   transition: all 0.3s ease;
 }
 
@@ -82,17 +82,19 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Buttons in Quiz and Paragraph Section */
-.quiz-button, .paragraph-button {
-  display: inline-block;
-  width: 45%;
-  max-width: 200px;
-  text-align: center;
+/* Special Styling for Grey Buttons */
+button.grade-quiz, button.next-paragraph {
+  background-color: #cccccc; /* Grey background */
+  color: #333; /* Dark text */
+}
+
+button.grade-quiz:hover, button.next-paragraph:hover {
+  background-color: #bfbfbf; /* Slightly darker grey on hover */
 }
 
 /* Feedback Message */
 #feedback, #paragraph-feedback {
-  font-size: 1.1rem; /* Same size */
+  font-size: 1.1rem;
   text-align: center;
   margin-top: 15px;
   padding: 10px;
@@ -120,13 +122,7 @@ button:disabled {
   text-align: center;
   font-weight: bold;
   color: #0077cc;
-  font-size: 1.1rem; /* Same size */
-}
-
-/* Next Paragraph Button */
-#next-paragraph {
-  display: block;
-  margin: 20px auto;
+  font-size: 1.1rem;
 }
 
 /* Blank Styling */
@@ -136,7 +132,7 @@ button:disabled {
   background-color: #f2f2f2;
   border: 1px dashed #ccc;
   border-radius: 5px;
-  font-size: 1.1rem; /* Same size */
+  font-size: 1.1rem;
   font-style: italic;
   color: #333;
   margin: 0 3px;
@@ -148,7 +144,7 @@ button:disabled {
 footer {
   text-align: center;
   margin-top: 30px;
-  font-size: 1.1rem; /* Same size */
+  font-size: 1.1rem;
   color: #666;
 }
 
