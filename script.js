@@ -5,6 +5,7 @@ let totalScore = 0;
 let incorrectAnswers = [];
 let paragraphCorrect = 0;
 let paragraphIncorrect = 0;
+let feedbackTimeout; // To manage clearing feedback timeout
 
 // Shuffle Questions
 function shuffleQuestions(array) {
@@ -18,8 +19,10 @@ function shuffleQuestions(array) {
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = ""; // Clear previous content
+
   const feedback = document.getElementById("feedback");
   feedback.textContent = ""; // Clear feedback
+  clearTimeout(feedbackTimeout); // Ensure previous timeout is cleared
 
   if (currentIndex >= questionPool.length) {
     showQuizResults();
@@ -42,7 +45,6 @@ function loadQuestion() {
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
 
-  // Ensure "Grade Quiz" button is always present
   if (!document.getElementById("grade-quiz")) {
     const gradeButton = document.createElement("button");
     gradeButton.textContent = "Grade Quiz";
@@ -65,8 +67,15 @@ function evaluateAnswer(selectedOption, question) {
     feedback.style.color = "red";
   }
 
+  // Clear the previous timeout to avoid overlap
+  clearTimeout(feedbackTimeout);
+
+  // Hide the feedback after 5 seconds
+  feedbackTimeout = setTimeout(() => {
+    feedback.textContent = "";
+  }, 5000);
+
   setTimeout(() => {
-    feedback.textContent = ""; // Clear feedback after 5 seconds
     currentIndex++;
     loadQuestion();
   }, 5000);
@@ -76,6 +85,8 @@ function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
   const feedback = document.getElementById("feedback");
   feedback.textContent = ""; // Clear any lingering feedback
+  clearTimeout(feedbackTimeout);
+
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
     <p>Your Score: <span style="color: green;">${totalScore}</span> / ${currentIndex}</p>
@@ -113,7 +124,6 @@ function loadParagraph() {
 
   paragraphContainer.innerHTML = `<p>${paragraphHTML}</p>`;
 
-  // Display relevant buttons based on the category
   const optionsContainer = document.createElement("div");
   const uniqueOptions = [...new Set(currentParagraph.options)];
   uniqueOptions.forEach((option) => {
