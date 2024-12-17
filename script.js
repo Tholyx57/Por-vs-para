@@ -39,6 +39,16 @@ function loadQuestion() {
 
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
+
+  // Add "Grade Quiz" button if it doesn't exist
+  if (!document.getElementById("grade-quiz")) {
+    const gradeButton = document.createElement("button");
+    gradeButton.textContent = "Grade Quiz";
+    gradeButton.className = "quiz-button";
+    gradeButton.id = "grade-quiz";
+    gradeButton.addEventListener("click", showQuizResults);
+    quizContainer.appendChild(gradeButton);
+  }
 }
 
 function evaluateAnswer(selectedOption, question) {
@@ -62,7 +72,7 @@ function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
-    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
+    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${currentIndex}</p>
   `;
 }
 
@@ -86,7 +96,7 @@ function loadParagraph() {
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
-  let userAnswers = Array(currentParagraph.answers.length).fill(""); // To track user answers
+  let userAnswers = Array(currentParagraph.answers.length).fill("");
 
   // Display paragraph with blanks
   let paragraphHTML = currentParagraph.text.split("___").map((part, i) => {
@@ -112,12 +122,12 @@ function loadParagraph() {
 
   const submitButton = document.createElement("button");
   submitButton.textContent = "Submit Paragraph";
+  submitButton.className = "paragraph-button";
   submitButton.onclick = () => evaluateParagraphAnswer(userAnswers, currentParagraph);
   paragraphContainer.appendChild(submitButton);
 }
 
 function handleParagraphSelection(option, userAnswers, currentParagraph) {
-  // Find the first blank that hasn't been filled
   for (let i = 0; i < userAnswers.length; i++) {
     if (!userAnswers[i]) {
       userAnswers[i] = option;
