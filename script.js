@@ -17,7 +17,7 @@ function shuffleQuestions(array) {
 // ========================= QUIZ SECTION =========================
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
-  quizContainer.innerHTML = ""; // Clear previous content
+  quizContainer.innerHTML = "";
 
   if (currentIndex >= questionPool.length) {
     showQuizResults();
@@ -25,12 +25,9 @@ function loadQuestion() {
   }
 
   const currentQuestion = questionPool[currentIndex];
-
-  // Question text
   const questionText = document.createElement("p");
   questionText.textContent = currentQuestion.question;
 
-  // Options as buttons
   const optionsContainer = document.createElement("div");
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
@@ -46,7 +43,6 @@ function loadQuestion() {
 
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
-
   if (selectedOption === question.correct) {
     feedback.textContent = `Correct! ${question.rationale}`;
     feedback.style.color = "green";
@@ -90,71 +86,75 @@ function loadParagraph() {
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
-  let html = `<p>${currentParagraph.text}</p>`;
+  let userAnswers = Array(currentParagraph.answers.length).fill(""); // To track user answers
 
-  currentParagraph.answers.forEach((_, index) => {
-    html += `<div>
-        <strong>Blank ${index + 1}:</strong>
-        ${currentParagraph.options
-          .map(
-            (option) =>
-              `<button class="paragraph-button" onclick="selectParagraphAnswer('${option}', ${index})">${option}</button>`
-          )
-          .join(" ")}
-        <span id="paragraph-feedback-${index}" style="margin-left: 10px;"></span>
-      </div>`;
-  });
-
-  html += `<button id="submit-paragraph" onclick="evaluateParagraphAnswer()">Submit</button>`;
-  paragraphContainer.innerHTML = html;
-}
-
-let paragraphAnswers = []; // Temporarily store user's paragraph answers
-
-function selectParagraphAnswer(option, index) {
-  paragraphAnswers[index] = option;
-
-  // Highlight the selected button
-  const buttons = document.querySelectorAll(`.paragraph-button`);
-  buttons.forEach((btn) => {
-    if (btn.textContent === option) {
-      btn.style.backgroundColor = "#0077cc";
-      btn.style.color = "white";
-    } else {
-      btn.style.backgroundColor = "lightblue";
-      btn.style.color = "black";
+  // Display paragraph with blanks
+  let paragraphHTML = currentParagraph.text.split("___").map((part, i) => {
+    if (i < currentParagraph.answers.length) {
+      return `${part} <span class="blank" id="blank-${i}">___</span>`;
     }
+    return part;
+  }).join("");
+
+  paragraphContainer.innerHTML = `<p>${paragraphHTML}</p>`;
+
+  // Display options as buttons
+  const optionsContainer = document.createElement("div");
+  currentParagraph.options.forEach((option) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.className = "paragraph-button";
+    button.addEventListener("click", () => handleParagraphSelection(option, userAnswers, currentParagraph));
+    optionsContainer.appendChild(button);
   });
+
+  paragraphContainer.appendChild(optionsContainer);
+
+  const submitButton = document.createElement("button");
+  submitButton.textContent = "Submit Paragraph";
+  submitButton.onclick = () => evaluateParagraphAnswer(userAnswers, currentParagraph);
+  paragraphContainer.appendChild(submitButton);
 }
 
-function evaluateParagraphAnswer() {
-  const currentParagraph = paragraphPool[paragraphIndex];
+function handleParagraphSelection(option, userAnswers, currentParagraph) {
+  // Find the first blank that hasn't been filled
+  for (let i = 0; i < userAnswers.length; i++) {
+    if (!userAnswers[i]) {
+      userAnswers[i] = option;
+      const blankElement = document.getElementById(`blank-${i}`);
+      blankElement.textContent = option;
+      blankElement.style.color = "blue";
+      break;
+    }
+  }
+}
+
+function evaluateParagraphAnswer(userAnswers, currentParagraph) {
+  const feedback = document.getElementById("paragraph-feedback");
   let allCorrect = true;
 
-  currentParagraph.answers.forEach((correctAnswer, index) => {
-    const feedback = document.getElementById(`paragraph-feedback-${index}`);
-    const userAnswer = paragraphAnswers[index];
-
-    if (userAnswer === correctAnswer) {
-      feedback.textContent = "✔️";
-      feedback.style.color = "green";
-    } else {
-      feedback.textContent = "❌";
-      feedback.style.color = "red";
+  userAnswers.forEach((answer, i) => {
+    if (answer !== currentParagraph.answers[i]) {
       allCorrect = false;
+      document.getElementById(`blank-${i}`).style.color = "red";
+    } else {
+      document.getElementById(`blank-${i}`).style.color = "green";
     }
   });
 
   if (allCorrect) {
+    feedback.innerHTML = `<p style="color: green;">Correct!</p>`;
     paragraphCorrect++;
   } else {
+    feedback.innerHTML = `<p style="color: red;">Incorrect. Explanations:</p>`;
+    const rationaleList = currentParagraph.rationales.map(r => `<li>${r}</li>`).join("");
+    feedback.innerHTML += `<ul>${rationaleList}</ul>`;
     paragraphIncorrect++;
   }
 
   const nextButton = document.getElementById("next-paragraph");
   nextButton.style.display = "block";
   nextButton.onclick = () => {
-    paragraphAnswers = [];
     paragraphIndex++;
     loadParagraph();
   };
