@@ -26,10 +26,12 @@ function loadQuestion() {
 
   const currentQuestion = questionPool[currentIndex];
 
+  // Question text
   const questionText = document.createElement("p");
   questionText.textContent = currentQuestion.question;
   questionText.style.fontSize = "1.5em";
 
+  // Options as buttons
   const optionsContainer = document.createElement("div");
   optionsContainer.style.marginTop = "20px";
 
@@ -46,6 +48,15 @@ function loadQuestion() {
 
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
+
+  // Add "Grade Quiz" button
+  const gradeButton = document.createElement("button");
+  gradeButton.textContent = "Grade Quiz";
+  gradeButton.style.padding = "15px";
+  gradeButton.style.marginTop = "20px";
+  gradeButton.style.fontSize = "1.5em";
+  gradeButton.onclick = showQuizResults;
+  quizContainer.appendChild(gradeButton);
 }
 
 function evaluateAnswer(selectedOption, question) {
@@ -70,7 +81,8 @@ function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
-    <p style="font-size: 1.5em;">Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
+    <p style="font-size: 1.5em;">Your Score: <span style="color: green;">${totalScore}</span> / ${currentIndex}</p>
+    <p style="color: red;">Incorrect Answers: ${incorrectAnswers.length}</p>
   `;
 }
 
@@ -94,15 +106,19 @@ function loadParagraph() {
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
-  const blanks = currentParagraph.answers;
-
   let html = `<p style="font-size: 1.2em;">${currentParagraph.text.replace(/___/g, '___')}</p>`;
 
-  blanks.forEach((answer, index) => {
+  // Create answer buttons for each blank
+  currentParagraph.answers.forEach((answer, index) => {
     html += `
       <div style="margin: 10px;">
         <label><strong>Blank ${index + 1}:</strong></label>
-        <button style="padding: 15px; font-size: 1.2em;" onclick="checkParagraphAnswer('${answer}', ${index})">${answer}</button>
+        <button style="padding: 10px; font-size: 1.2em;" onclick="checkParagraphAnswer('${answer}', ${index}, '${currentParagraph.options.join(',')}')">
+          ${currentParagraph.options[0]}
+        </button>
+        <button style="padding: 10px; font-size: 1.2em;" onclick="checkParagraphAnswer('${answer}', ${index}, '${currentParagraph.options.join(',')}')">
+          ${currentParagraph.options[1]}
+        </button>
       </div>
     `;
   });
