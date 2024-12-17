@@ -264,8 +264,6 @@ const questionPool = [
   category: "Conocer vs. Saber",
 },
 
-];
-
 const paragraphPool = [
   // Por vs Para Paragraphs
   {
