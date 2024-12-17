@@ -71,31 +71,34 @@ function evaluateAnswer(selectedOption, question) {
 
 function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
+  const feedback = document.getElementById("feedback");
+
+  // Clear quiz container and feedback
+  quizContainer.innerHTML = "";
+  feedback.textContent = "";
+
+  // Display final score
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
     <p>Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
     <p>Incorrect Answers: <span style="color: red;">${incorrectAnswers.length}</span></p>
+    ${incorrectAnswers.length > 0 ? "<h3>Review Incorrect Questions:</h3>" : ""}
   `;
+
+  // Display incorrect answers and rationales
+  if (incorrectAnswers.length > 0) {
+    incorrectAnswers.forEach((question, index) => {
+      const questionReview = document.createElement("div");
+      questionReview.innerHTML = `
+        <p><strong>${index + 1}. ${question.question}</strong></p>
+        <p>Correct Answer: <strong>${question.correct}</strong></p>
+        <p>Explanation: ${question.rationale}</p>
+      `;
+      quizContainer.appendChild(questionReview);
+    });
+  }
 }
 
-// ========================= PARAGRAPH SECTION =========================
-function loadParagraph() {
-  const paragraphContainer = document.getElementById("paragraph-container");
-  const feedback = document.getElementById("paragraph-feedback");
-  const nextButton = document.getElementById("next-paragraph");
-
-  paragraphContainer.innerHTML = "";
-  feedback.innerHTML = "";
-  nextButton.style.display = "none";
-
-  if (paragraphIndex >= paragraphPool.length) {
-    paragraphContainer.innerHTML = `
-      <h2>Paragraph Practice Complete!</h2>
-      <p>Correct: <span style="color: green;">${paragraphCorrect}</span></p>
-      <p>Incorrect: <span style="color: red;">${paragraphIncorrect}</span></p>
-    `;
-    return;
-  }
 
   const currentParagraph = paragraphPool[paragraphIndex];
   let html = `<p>${currentParagraph.text}</p>`;
