@@ -20,7 +20,7 @@ function loadQuestion() {
   quizContainer.innerHTML = ""; // Clear previous content
 
   if (currentIndex >= questionPool.length) {
-    document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${questionPool.length}.`;
+    showQuizResults(); // Show results when questions are complete
     return;
   }
 
@@ -32,21 +32,28 @@ function loadQuestion() {
 
   // Options as buttons
   const optionsContainer = document.createElement("div");
+  optionsContainer.style.marginTop = "10px"; // Space for buttons
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
-    button.innerHTML = `<strong>${option}</strong>`;
+    button.style.padding = "10px"; // Larger buttons
+    button.style.margin = "5px";
+    button.style.fontWeight = "bold";
+    button.innerHTML = `${option}`;
     button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
     optionsContainer.appendChild(button);
   });
 
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
+
+  // Clear previous feedback
+  const feedback = document.getElementById("feedback");
+  feedback.textContent = "";
 }
 
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
 
-  // Check if the selected answer is correct
   if (selectedOption === question.correct) {
     feedback.textContent = `Correct! ${question.rationale}`;
     feedback.style.color = "green";
@@ -57,17 +64,13 @@ function evaluateAnswer(selectedOption, question) {
     incorrectAnswers.push(question); // Add incorrect question for review
   }
 
+  // Remove feedback after 5 seconds and load next question
   setTimeout(() => {
+    feedback.textContent = "";
     currentIndex++;
-    if (currentIndex < questionPool.length) {
-      loadQuestion();
-    } else {
-      showQuizResults(); // Display results after last question
-    }
-  }, 2000);
+    loadQuestion();
+  }, 5000);
 }
-
-
 
 function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
@@ -89,6 +92,7 @@ function showQuizResults() {
   if (incorrectAnswers.length > 0) {
     incorrectAnswers.forEach((question, index) => {
       const questionReview = document.createElement("div");
+      questionReview.style.marginTop = "10px";
       questionReview.innerHTML = `
         <p><strong>${index + 1}. ${question.question}</strong></p>
         <p>Correct Answer: <strong>${question.correct}</strong></p>
@@ -99,6 +103,24 @@ function showQuizResults() {
   }
 }
 
+// ========================= PARAGRAPH SECTION =========================
+function loadParagraph() {
+  const paragraphContainer = document.getElementById("paragraph-container");
+  const feedback = document.getElementById("paragraph-feedback");
+  const nextButton = document.getElementById("next-paragraph");
+
+  paragraphContainer.innerHTML = "";
+  feedback.innerHTML = "";
+  nextButton.style.display = "none";
+
+  if (paragraphIndex >= paragraphPool.length) {
+    paragraphContainer.innerHTML = `
+      <h2>Paragraph Practice Complete!</h2>
+      <p>Correct: <span style="color: green;">${paragraphCorrect}</span></p>
+      <p>Incorrect: <span style="color: red;">${paragraphIncorrect}</span></p>
+    `;
+    return;
+  }
 
   const currentParagraph = paragraphPool[paragraphIndex];
   let html = `<p>${currentParagraph.text}</p>`;
@@ -108,7 +130,7 @@ function showQuizResults() {
       <input type="text" id="answer-${index}" placeholder="Enter answer" /><br>
     `;
   });
-  html += `<button onclick="evaluateParagraphAnswer()">Submit</button>`;
+  html += `<button style="margin-top: 10px; padding: 10px; font-weight: bold;" onclick="evaluateParagraphAnswer()">Submit</button>`;
   paragraphContainer.innerHTML = html;
 }
 
