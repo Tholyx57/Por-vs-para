@@ -256,7 +256,7 @@ const questionPool = [
   correct: "saben",
   options: ["conocen", "saben"],
   rationale: "Saber is used for knowing specific information (the author).",
-  category: "Conocer vs. Saber",
+  category: "Conocer vs. Saber"
 }
 ];
 const paragraphPool = [
@@ -322,4 +322,106 @@ const paragraphPool = [
     ],
     category: "Conocer vs. Saber",
   },
+  {
+    text: "Después de años de estudiar historia, finalmente ___ los detalles de cómo se formó el imperio romano. Sin embargo, todavía no ___ a muchos historiadores que se dedican a este campo, lo cual sería muy útil para mi investigación.",
+    answers: ["sé", "conozco"],
+    options: ["sé", "conozco"],
+    rationales: [
+      "Sé is used for knowing facts or detailed information (the formation of the Roman Empire).",
+      "Conozco is used for being familiar with people (historians)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Durante nuestra visita al museo, el guía nos preguntó si ___ quién pintó 'Las Meninas'. Aunque yo ___ la respuesta, muchos compañeros de clase nunca han ___ a un pintor tan importante como Velázquez.",
+    answers: ["sabía", "sabía", "conocido"],
+    options: ["sabía", "sabía", "conocido"],
+    rationales: [
+      "Sabía is used for knowing information (who painted 'Las Meninas').",
+      "Sabía again refers to knowing the answer itself.",
+      "Conocido is used for having met someone or encountered their work."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "He vivido en esta ciudad por años y ___ perfectamente cada calle y edificio del centro. Sin embargo, no ___ cómo funciona el transporte público porque nunca lo he usado.",
+    answers: ["conozco", "sé"],
+    options: ["conozco", "sé"],
+    rationales: [
+      "Conozco is used for being familiar with places (streets and buildings).",
+      "Sé is used for knowing how something works (public transport)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Mi amiga Carla ___ varios idiomas, pero no ___ a nadie que hable japonés en su círculo de amigos. Ella quiere practicar, pero necesita encontrar a alguien que la pueda ayudar.",
+    answers: ["sabe", "conoce"],
+    options: ["sabe", "conoce"],
+    rationales: [
+      "Sabe is used for knowing languages (knowledge or skills).",
+      "Conoce is used for familiarity with people (someone who speaks Japanese)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Mis abuelos siempre me cuentan historias sobre lugares maravillosos que ___ cuando eran jóvenes. Pero lo interesante es que todavía ___ detalles específicos de esos viajes, como fechas y nombres.",
+    answers: ["conocieron", "saben"],
+    options: ["conocieron", "saben"],
+    rationales: [
+      "Conocieron is used for having visited or discovered places for the first time.",
+      "Saben is used for knowing specific details (dates and names)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Aunque nunca he visitado París, ___ mucho sobre su cultura, historia y monumentos importantes. Espero algún día ___ la ciudad en persona y ver la Torre Eiffel.",
+    answers: ["sé", "conocer"],
+    options: ["sé", "conocer"],
+    rationales: [
+      "Sé is used for knowing facts or information (Parisian culture and monuments).",
+      "Conocer is used for experiencing or visiting a place in person (Paris)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Marcos dice que ___ a mucha gente famosa debido a su trabajo en la industria del cine. Aun así, no ___ nada sobre cómo se hacen las películas, lo cual me resulta sorprendente.",
+    answers: ["conoce", "sabe"],
+    options: ["conoce", "sabe"],
+    rationales: [
+      "Conoce is used for being familiar with people (famous people).",
+      "Sabe is used for knowing facts or processes (how movies are made)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Durante mi viaje a México, ___ muchos pueblos mágicos llenos de historia. Sin embargo, no ___ exactamente cómo se originaron estas tradiciones.",
+    answers: ["conocí", "sé"],
+    options: ["conocí", "sé"],
+    rationales: [
+      "Conocí is used for visiting places for the first time (magical towns).",
+      "Sé is used for knowing specific information (origin of traditions)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Si quieres mejorar tu escritura, te recomiendo que ___ a algunos autores clásicos. Además, debes ___ las reglas básicas de la gramática española.",
+    answers: ["conozcas", "saber"],
+    options: ["conozcas", "saber"],
+    rationales: [
+      "Conozcas is used for becoming familiar with people (classic authors).",
+      "Saber is used for knowing rules or skills (grammar rules)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Al llegar al concierto, ___ a varios músicos del grupo porque los había visto en entrevistas. Lo curioso es que mi hermana no ___ quiénes eran hasta que empezaron a tocar.",
+    answers: ["conocí", "sabía"],
+    options: ["conocí", "sabía"],
+    rationales: [
+      "Conocí is used for meeting or recognizing people for the first time.",
+      "Sabía is used for knowing facts or information (who the musicians were)."
+    ],
+    category: "Conocer vs. Saber"
+  }
+
   ];
