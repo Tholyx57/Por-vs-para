@@ -422,6 +422,105 @@ const paragraphPool = [
       "Sabía is used for knowing facts or information (who the musicians were)."
     ],
     category: "Conocer vs. Saber"
+  }{
+    text: "Durante la conferencia, el profesor habló sobre un autor del siglo XIX que yo no ___. Sin embargo, después de investigar más, ahora ___ varias obras escritas por él.",
+    answers: ["conocía", "sé"],
+    options: ["conocía", "sé"],
+    rationales: [
+      "Conocía is used for lacking familiarity with someone at the time.",
+      "Sé is used for knowing information (works written by the author)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Mis padres ___ muy bien cómo reparar cualquier electrodoméstico, pero nunca ___ a un técnico profesional que les enseñara esas habilidades.",
+    answers: ["saben", "conocieron"],
+    options: ["saben", "conocieron"],
+    rationales: [
+      "Saben is used for knowing how to do something (repair appliances).",
+      "Conocieron is used for meeting a person for the first time (a professional technician)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Antes de empezar mi trabajo en el banco, no ___ nada sobre finanzas personales. Ahora ___ las herramientas necesarias para manejar mi dinero.",
+    answers: ["sabía", "conozco"],
+    options: ["sabía", "conozco"],
+    rationales: [
+      "Sabía is used for knowing nothing about a subject before.",
+      "Conozco is used for being familiar with tools or concepts now."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "El turista nos preguntó si ___ algún restaurante típico en esta ciudad. Afortunadamente, nosotros ___ un lugar muy acogedor donde sirven comida local.",
+    answers: ["conocíamos", "sabemos"],
+    options: ["conocíamos", "sabemos"],
+    rationales: [
+      "Conocíamos is used for being familiar with a place (a restaurant).",
+      "Sabemos is used for knowing where something is located or specific details."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Mi hermano no ___ bien a los vecinos nuevos porque acaba de mudarse. Sin embargo, yo ___ que vienen de una ciudad cercana y son muy amigables.",
+    answers: ["conoce", "sé"],
+    options: ["conoce", "sé"],
+    rationales: [
+      "Conoce is used for being familiar with people (the new neighbors).",
+      "Sé is used for knowing facts or information (where they come from)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "¿Tú ___ cómo se resuelven ecuaciones complejas? Mi primo estudia matemáticas y ___ a muchos profesores que le han enseñado estas técnicas.",
+    answers: ["sabes", "conoce"],
+    options: ["sabes", "conoce"],
+    rationales: [
+      "Sabes is used for knowing how to do something (solving equations).",
+      "Conoce is used for being familiar with people (the professors)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Durante la excursión, los estudiantes ___ muchos sitios históricos. Al regresar, todos dijeron que ahora ___ mucho más sobre la historia local.",
+    answers: ["conocieron", "saben"],
+    options: ["conocieron", "saben"],
+    rationales: [
+      "Conocieron is used for visiting places for the first time.",
+      "Saben is used for knowing facts or details (local history)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "La maestra nos preguntó si ___ a alguien que hablara más de cinco idiomas. Sorprendentemente, un compañero de clase ___ a una persona que cumple con ese requisito.",
+    answers: ["conocíamos", "conoce"],
+    options: ["conocíamos", "conoce"],
+    rationales: [
+      "Conocíamos is used for knowing or not knowing someone.",
+      "Conoce is used for being familiar with someone (a multilingual person)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Aunque no ___ tocar la guitarra, mi amigo me recomendó un profesor que él ___. Espero aprender a tocar pronto.",
+    answers: ["sé", "conoce"],
+    options: ["sé", "conoce"],
+    rationales: [
+      "Sé is used for knowing how to do something (playing the guitar).",
+      "Conoce is used for being familiar with a person (the professor)."
+    ],
+    category: "Conocer vs. Saber"
+  },
+  {
+    text: "Antes del viaje, no ___ nada sobre la cultura de Japón. Ahora que lo visité, puedo decir que ___ algunos aspectos de sus costumbres y tradiciones.",
+    answers: ["sabía", "conozco"],
+    options: ["sabía", "conozco"],
+    rationales: [
+      "Sabía is used for lacking knowledge before (about Japan's culture).",
+      "Conozco is used for having familiarity now (with traditions and customs)."
+    ],
+    category: "Conocer vs. Saber"
   }
 
   ];
