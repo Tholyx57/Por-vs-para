@@ -263,6 +263,7 @@ const questionPool = [
   rationale: "Saber is used for knowing specific information (the author).",
   category: "Conocer vs. Saber",
 },
+    ],
 
 const paragraphPool = [
   // Por vs Para Paragraphs
@@ -328,4 +329,4 @@ const paragraphPool = [
     category: "Conocer vs. Saber",
   },
   ]
-  {;
+  ];
