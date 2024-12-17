@@ -123,8 +123,6 @@ const questionPool = [
   rationale: "Para is used to express purpose (discussing final details).",
   category: "Por vs. Para",
 },
-
-// Ser vs. Estar Questions
 {
   question: "La situación actual del país ___ complicada debido a los problemas económicos.",
   correct: "está",
@@ -195,8 +193,6 @@ const questionPool = [
   rationale: "Están is used for temporary states (the windows being dirty after the rain).",
   category: "Ser vs. Estar",
 },
-
-// Conocer vs. Saber Questions
 {
   question: "¿Tú ___ la fecha exacta en la que se fundó la ciudad?",
   correct: "sabes",
@@ -270,8 +266,6 @@ const questionPool = [
 
 ];
 
-];
-
 const paragraphPool = [
   // Por vs Para Paragraphs
   {
@@ -295,8 +289,6 @@ const paragraphPool = [
     ],
     category: "Por vs. Para",
   },
-
-  // Ser vs Estar Paragraphs
   {
     text: "Mi amigo Juan ___ de Colombia, pero ahora ___ viviendo en México.",
     answers: ["es", "está"],
@@ -317,8 +309,6 @@ const paragraphPool = [
     ],
     category: "Ser vs. Estar",
   },
-
-  // Conocer vs Saber Paragraphs
   {
     text: "Yo ___ muy bien esta ciudad porque he vivido aquí muchos años. Además, ___ el nombre de todas las calles.",
     answers: ["conozco", "sé"],
