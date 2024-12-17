@@ -8,7 +8,7 @@ let paragraphCorrect = 0;
 let paragraphIncorrect = 0;
 let incorrectAnswers = [];
 
-// Shuffle questions for randomness
+// Shuffle function for randomness
 function shuffleQuestions(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -36,37 +36,24 @@ function loadQuestion() {
 
   const currentQuestion = questionPool[currentIndex];
   quizContainer.innerHTML = `
-    <p>${currentQuestion.question}</p>
-    <input type="radio" id="option-1" name="answer" value="por"> <label for="option-1">Por</label><br>
-    <input type="radio" id="option-2" name="answer" value="para"> <label for="option-2">Para</label><br><br>
-    <button id="submit-btn">Submit</button>
+    <p><strong>${currentQuestion.question}</strong></p>
+    <button class="answer-btn" onclick="evaluateQuizAnswer('por')"><strong>Por</strong></button>
+    <button class="answer-btn" onclick="evaluateQuizAnswer('para')"><strong>Para</strong></button>
   `;
-
-  document.getElementById("submit-btn").addEventListener("click", evaluateQuizAnswer);
 }
 
 // Evaluate quiz answers
-function evaluateQuizAnswer() {
-  const selectedOption = document.querySelector('input[name="answer"]:checked');
+function evaluateQuizAnswer(answer) {
+  const currentQuestion = questionPool[currentIndex];
   const feedback = document.getElementById("feedback");
 
-  if (!selectedOption) {
-    feedback.textContent = "Please select an answer before submitting.";
-    feedback.style.color = "red";
-    return;
-  }
-
-  const currentQuestion = questionPool[currentIndex];
-  if (selectedOption.value === currentQuestion.correct) {
+  if (answer === currentQuestion.correct) {
     totalScore++;
-    feedback.textContent = `Correct! ${currentQuestion.rationale}`;
-    feedback.style.color = "green";
-
+    feedback.innerHTML = `<p style="color: green;">Correct! ${currentQuestion.rationale}</p>`;
     if (currentQuestion.correct === "por") porCorrect++;
     if (currentQuestion.correct === "para") paraCorrect++;
   } else {
-    feedback.textContent = `Incorrect. ${currentQuestion.rationale}`;
-    feedback.style.color = "red";
+    feedback.innerHTML = `<p style="color: red;">Incorrect. ${currentQuestion.rationale}</p>`;
     incorrectAnswers.push(currentQuestion);
   }
 
@@ -76,30 +63,27 @@ function evaluateQuizAnswer() {
   }, 2000);
 }
 
-// Show review of incorrect answers
+// Review incorrect answers
 function showReview() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = "<h2>Review Incorrect Answers</h2>";
-
   incorrectAnswers.forEach((question, index) => {
-    const div = document.createElement("div");
-    div.innerHTML = `
+    quizContainer.innerHTML += `
       <p>${index + 1}. ${question.question}</p>
       <p><strong>Correct Answer:</strong> ${question.correct}</p>
       <p><strong>Explanation:</strong> ${question.rationale}</p>
     `;
-    quizContainer.appendChild(div);
   });
 }
 
-// Load paragraph practice
+// Paragraph Practice
 function loadParagraph() {
   const paragraphContainer = document.getElementById("paragraph-container");
   const feedback = document.getElementById("paragraph-feedback");
   const nextButton = document.getElementById("next-paragraph");
 
   paragraphContainer.innerHTML = "";
-  feedback.textContent = "";
+  feedback.innerHTML = "";
   nextButton.style.display = "none";
 
   if (paragraphIndex >= paragraphPool.length) {
@@ -115,21 +99,17 @@ function loadParagraph() {
   let html = `<p>${currentParagraph.text}</p>`;
   currentParagraph.answers.forEach((_, index) => {
     html += `
-      <label for="answer-${index}">Blank ${index + 1}: </label>
-      <input type="text" id="answer-${index}" placeholder="Enter 'por', 'para', etc."><br>
+      <label for="answer-${index}">Blank ${index + 1}:</label>
+      <input type="text" id="answer-${index}" placeholder="Enter answer"><br>
     `;
   });
-  html += `<button id="submit-paragraph">Submit</button>`;
+  html += `<button onclick="evaluateParagraphAnswer()">Submit</button>`;
   paragraphContainer.innerHTML = html;
-
-  document.getElementById("submit-paragraph").addEventListener("click", evaluateParagraphAnswer);
 }
 
-// Evaluate paragraph practice answers
 function evaluateParagraphAnswer() {
   const currentParagraph = paragraphPool[paragraphIndex];
   const feedback = document.getElementById("paragraph-feedback");
-  const nextButton = document.getElementById("next-paragraph");
   let isCorrect = true;
 
   currentParagraph.answers.forEach((answer, index) => {
@@ -143,17 +123,16 @@ function evaluateParagraphAnswer() {
   });
 
   if (isCorrect) {
-    feedback.textContent = "Correct! Well done.";
-    feedback.style.color = "green";
+    feedback.innerHTML = `<p style="color: green;">Correct! Well done.</p>`;
     paragraphCorrect++;
   } else {
-    feedback.textContent = "Incorrect. Here's what you missed:";
-    feedback.style.color = "red";
-    const rationaleList = currentParagraph.rationales.map((rationale) => `<li>${rationale}</li>`).join("");
+    feedback.innerHTML = `<p style="color: red;">Incorrect. Here's what you missed:</p>`;
+    const rationaleList = currentParagraph.rationales.map((r) => `<li>${r}</li>`).join("");
     feedback.innerHTML += `<ul>${rationaleList}</ul>`;
     paragraphIncorrect++;
   }
 
+  const nextButton = document.getElementById("next-paragraph");
   nextButton.style.display = "block";
   nextButton.onclick = () => {
     paragraphIndex++;
@@ -161,7 +140,7 @@ function evaluateParagraphAnswer() {
   };
 }
 
-// Initialize the quiz and paragraph practice
+// Initialize quiz and paragraph practice
 function initQuiz() {
   shuffleQuestions(questionPool);
   loadQuestion();
