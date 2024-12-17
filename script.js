@@ -17,7 +17,7 @@ function shuffleQuestions(array) {
 // ========================= QUIZ SECTION =========================
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
-  quizContainer.innerHTML = "";
+  quizContainer.innerHTML = ""; // Clear previous content
 
   if (currentIndex >= questionPool.length) {
     showQuizResults();
@@ -40,7 +40,7 @@ function loadQuestion() {
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
 
-  // Add "Grade Quiz" button if it doesn't exist
+  // Ensure "Grade Quiz" button is always present
   if (!document.getElementById("grade-quiz")) {
     const gradeButton = document.createElement("button");
     gradeButton.textContent = "Grade Quiz";
@@ -98,7 +98,6 @@ function loadParagraph() {
   const currentParagraph = paragraphPool[paragraphIndex];
   let userAnswers = Array(currentParagraph.answers.length).fill("");
 
-  // Display paragraph with blanks
   let paragraphHTML = currentParagraph.text.split("___").map((part, i) => {
     if (i < currentParagraph.answers.length) {
       return `${part} <span class="blank" id="blank-${i}">___</span>`;
@@ -108,9 +107,10 @@ function loadParagraph() {
 
   paragraphContainer.innerHTML = `<p>${paragraphHTML}</p>`;
 
-  // Display options as buttons
+  // Display relevant buttons based on the category
   const optionsContainer = document.createElement("div");
-  currentParagraph.options.forEach((option) => {
+  const uniqueOptions = [...new Set(currentParagraph.options)];
+  uniqueOptions.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
     button.className = "paragraph-button";
