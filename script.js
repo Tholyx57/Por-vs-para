@@ -18,6 +18,8 @@ function shuffleQuestions(array) {
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = ""; // Clear previous content
+  const feedback = document.getElementById("feedback");
+  feedback.textContent = ""; // Clear feedback
 
   if (currentIndex >= questionPool.length) {
     showQuizResults();
@@ -53,6 +55,7 @@ function loadQuestion() {
 
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
+
   if (selectedOption === question.correct) {
     feedback.textContent = `Correct! ${question.rationale}`;
     feedback.style.color = "green";
@@ -63,9 +66,10 @@ function evaluateAnswer(selectedOption, question) {
   }
 
   setTimeout(() => {
+    feedback.textContent = ""; // Clear feedback after 5 seconds
     currentIndex++;
     loadQuestion();
-  }, 3000);
+  }, 5000);
 }
 
 function showQuizResults() {
