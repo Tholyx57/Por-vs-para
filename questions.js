@@ -21,8 +21,6 @@ const questionPool = [
     rationale: "Por is used to indicate the agent in passive constructions (painted by my grandfather).",
     category: "Por vs. Para",
   },
-
-  // Ser vs Estar Questions
   {
     question: "La sopa ___ caliente porque acaba de salir de la olla.",
     correct: "está",
@@ -37,8 +35,6 @@ const questionPool = [
     rationale: "Es is used for professions, which are considered permanent characteristics.",
     category: "Ser vs. Estar",
   },
-
-  // Conocer vs Saber Questions
   {
     question: "¿___ dónde está la biblioteca?",
     correct: "sabes",
