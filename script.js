@@ -17,61 +17,50 @@ function shuffleQuestions(array) {
 // ========================= QUIZ SECTION =========================
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
-  const feedback = document.getElementById("feedback");
-  quizContainer.innerHTML = "";
-  feedback.innerHTML = "";
+  quizContainer.innerHTML = ""; // Clear previous content
 
   if (currentIndex >= questionPool.length) {
-    showQuizResults();
+    document.getElementById("result").innerText = `Quiz Complete! Your final score: ${totalScore}/${questionPool.length}.`;
     return;
   }
 
   const currentQuestion = questionPool[currentIndex];
-  const buttons = generateButtons(currentQuestion.category);
 
-  quizContainer.innerHTML = `
-    <p><strong>${currentQuestion.question}</strong></p>
-    ${buttons}
-  `;
+  // Question text
+  const questionText = document.createElement("p");
+  questionText.textContent = currentQuestion.question;
+
+  // Options as buttons
+  const optionsContainer = document.createElement("div");
+  currentQuestion.options.forEach((option) => {
+    const button = document.createElement("button");
+    button.innerHTML = `<strong>${option}</strong>`;
+    button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
+    optionsContainer.appendChild(button);
+  });
+
+  quizContainer.appendChild(questionText);
+  quizContainer.appendChild(optionsContainer);
 }
 
-function generateButtons(category) {
-  let options = [];
-  if (category === "Por vs. Para") {
-    options = ["por", "para"];
-  } else if (category === "Ser vs. Estar") {
-    options = ["ser", "estar"];
-  } else if (category === "Conocer vs. Saber") {
-    options = ["saber", "conocer"];
-  }
-
-  return options
-    .map(
-      (option) =>
-        `<button class="answer-btn" onclick="evaluateQuizAnswer('${option}')"><strong>${option.toUpperCase()}</strong></button>`
-    )
-    .join(" ");
-}
-
-function evaluateQuizAnswer(answer) {
-  const currentQuestion = questionPool[currentIndex];
+function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
 
-  // Check correctness
-  if (answer === currentQuestion.correct) {
+  if (selectedOption === question.correct) {
+    feedback.textContent = `Correct! ${question.rationale}`;
+    feedback.style.color = "green";
     totalScore++;
-    feedback.innerHTML = `<p style="color: green;">Correct! ${currentQuestion.rationale}</p>`;
   } else {
-    feedback.innerHTML = `<p style="color: red;">Incorrect. Correct Answer: <strong>${currentQuestion.correct}</strong><br>${currentQuestion.rationale}</p>`;
-    incorrectAnswers.push(currentQuestion);
+    feedback.textContent = `Incorrect. ${question.rationale}`;
+    feedback.style.color = "red";
   }
 
-  // Move to next question after 2 seconds
   setTimeout(() => {
     currentIndex++;
     loadQuestion();
   }, 2000);
 }
+
 
 function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
