@@ -27,15 +27,30 @@ function loadQuestion() {
   }
 
   const currentQuestion = questionPool[currentIndex];
+  const buttons = generateButtons(currentQuestion.category);
+
   quizContainer.innerHTML = `
     <p><strong>${currentQuestion.question}</strong></p>
-    <button class="answer-btn" onclick="evaluateQuizAnswer('por')"><strong>Por</strong></button>
-    <button class="answer-btn" onclick="evaluateQuizAnswer('para')"><strong>Para</strong></button>
-    <button class="answer-btn" onclick="evaluateQuizAnswer('ser')"><strong>Ser</strong></button>
-    <button class="answer-btn" onclick="evaluateQuizAnswer('estar')"><strong>Estar</strong></button>
-    <button class="answer-btn" onclick="evaluateQuizAnswer('saber')"><strong>Saber</strong></button>
-    <button class="answer-btn" onclick="evaluateQuizAnswer('conocer')"><strong>Conocer</strong></button>
+    ${buttons}
   `;
+}
+
+function generateButtons(category) {
+  let options = [];
+  if (category === "Por vs. Para") {
+    options = ["por", "para"];
+  } else if (category === "Ser vs. Estar") {
+    options = ["ser", "estar"];
+  } else if (category === "Conocer vs. Saber") {
+    options = ["saber", "conocer"];
+  }
+
+  return options
+    .map(
+      (option) =>
+        `<button class="answer-btn" onclick="evaluateQuizAnswer('${option}')"><strong>${option.toUpperCase()}</strong></button>`
+    )
+    .join(" ");
 }
 
 function evaluateQuizAnswer(answer) {
