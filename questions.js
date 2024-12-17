@@ -251,8 +251,7 @@ const questionPool = [
   options: ["conocen", "saben"],
   rationale: "Conocer is used for familiarity with places (knowing Madrid well).",
   category: "Conocer vs. Saber",
-},
-{
+},{
   question: "¿Ustedes ___ quién es el autor de este libro tan interesante?",
   correct: "saben",
   options: ["conocen", "saben"],
@@ -260,7 +259,6 @@ const questionPool = [
   category: "Conocer vs. Saber",
 }
 ];
-
 const paragraphPool = [
   // Por vs Para Paragraphs
   {
