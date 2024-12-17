@@ -20,7 +20,7 @@ function loadQuestion() {
   quizContainer.innerHTML = ""; // Clear previous content
 
   if (currentIndex >= questionPool.length) {
-    showQuizResults(); // Show results when questions are complete
+    showQuizResults();
     return;
   }
 
@@ -29,14 +29,17 @@ function loadQuestion() {
   // Question text
   const questionText = document.createElement("p");
   questionText.textContent = currentQuestion.question;
+  questionText.style.fontSize = "1.5em";
 
   // Options as buttons
   const optionsContainer = document.createElement("div");
-  optionsContainer.style.marginTop = "10px"; // Space for buttons
+  optionsContainer.style.marginTop = "20px";
+
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
-    button.style.padding = "10px"; // Larger buttons
-    button.style.margin = "5px";
+    button.style.padding = "20px";
+    button.style.margin = "10px";
+    button.style.fontSize = "1.5em";
     button.style.fontWeight = "bold";
     button.innerHTML = `${option}`;
     button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
@@ -64,7 +67,7 @@ function evaluateAnswer(selectedOption, question) {
     incorrectAnswers.push(question); // Add incorrect question for review
   }
 
-  // Remove feedback after 5 seconds and load next question
+  // Clear feedback and load next question after 5 seconds
   setTimeout(() => {
     feedback.textContent = "";
     currentIndex++;
@@ -76,19 +79,15 @@ function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
   const feedback = document.getElementById("feedback");
 
-  // Clear quiz container and feedback
-  quizContainer.innerHTML = "";
-  feedback.textContent = "";
-
-  // Display final score
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
-    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
-    <p>Incorrect Answers: <span style="color: red;">${incorrectAnswers.length}</span></p>
+    <p style="font-size: 1.5em;">Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
+    <p style="font-size: 1.5em;">Incorrect Answers: <span style="color: red;">${incorrectAnswers.length}</span></p>
     ${incorrectAnswers.length > 0 ? "<h3>Review Incorrect Questions:</h3>" : ""}
   `;
 
-  // Display incorrect answers and rationales
+  feedback.textContent = "";
+
   if (incorrectAnswers.length > 0) {
     incorrectAnswers.forEach((question, index) => {
       const questionReview = document.createElement("div");
@@ -123,42 +122,38 @@ function loadParagraph() {
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
-  let html = `<p>${currentParagraph.text}</p>`;
-  currentParagraph.answers.forEach((_, index) => {
+  let html = `<p style="font-size: 1.5em;">${currentParagraph.text.replace(/___/g, '___')}</p>`;
+
+  currentParagraph.answers.forEach((answer, index) => {
     html += `
-      <label><strong>Blank ${index + 1}:</strong></label>
-      <input type="text" id="answer-${index}" placeholder="Enter answer" /><br>
+      <div style="margin: 10px 0;">
+        <label style="font-size: 1.2em; font-weight: bold;">Blank ${index + 1}:</label>
+        <button style="padding: 15px; margin: 5px; font-size: 1.5em; font-weight: bold;" 
+                onclick="evaluateParagraphAnswer(${index}, '${answer}')">
+          ${answer}
+        </button>
+      </div>
     `;
   });
-  html += `<button style="margin-top: 10px; padding: 10px; font-weight: bold;" onclick="evaluateParagraphAnswer()">Submit</button>`;
+
   paragraphContainer.innerHTML = html;
 }
 
-function evaluateParagraphAnswer() {
-  const currentParagraph = paragraphPool[paragraphIndex];
+function evaluateParagraphAnswer(blankIndex, correctAnswer) {
   const feedback = document.getElementById("paragraph-feedback");
-  let isCorrect = true;
+  const userChoice = event.target.innerText.trim();
 
-  currentParagraph.answers.forEach((answer, index) => {
-    const userAnswer = document.getElementById(`answer-${index}`).value.trim().toLowerCase();
-    if (userAnswer === answer) {
-      document.getElementById(`answer-${index}`).style.borderColor = "green";
-    } else {
-      document.getElementById(`answer-${index}`).style.borderColor = "red";
-      isCorrect = false;
-    }
-  });
-
-  if (isCorrect) {
+  if (userChoice === correctAnswer) {
+    event.target.style.backgroundColor = "green";
     feedback.innerHTML = `<p style="color: green;">Correct!</p>`;
     paragraphCorrect++;
   } else {
-    feedback.innerHTML = `<p style="color: red;">Incorrect. Explanations:</p>`;
-    const rationaleList = currentParagraph.rationales.map(r => `<li>${r}</li>`).join("");
-    feedback.innerHTML += `<ul>${rationaleList}</ul>`;
+    event.target.style.backgroundColor = "red";
+    feedback.innerHTML = `<p style="color: red;">Incorrect. The correct answer was: <strong>${correctAnswer}</strong></p>`;
     paragraphIncorrect++;
   }
 
+  // Show "Next Paragraph" button
   const nextButton = document.getElementById("next-paragraph");
   nextButton.style.display = "block";
   nextButton.onclick = () => {
