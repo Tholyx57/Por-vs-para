@@ -126,4 +126,28 @@ footer {
 
 #next-paragraph:hover {
   background-color: #218838;
+}/* General button styling for both quiz and paragraph sections */
+button {
+  background-color: #add8e6; /* Light blue color */
+  color: black; /* Black text */
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px 20px; /* Button size */
+  font-size: 16px; /* Text size */
+  cursor: pointer;
+  margin: 5px; /* Space between buttons */
 }
+
+button:hover {
+  background-color: #87ceeb; /* Slightly darker blue on hover */
+}
+
+button:active {
+  background-color: #6495ed; /* Active state - even darker blue */
+}
+
+button.selected {
+  background-color: #0077cc; /* Selected option highlight */
+  color: white; /* White text for selected option */
+}
+
