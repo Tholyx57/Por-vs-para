@@ -46,6 +46,7 @@ function loadQuestion() {
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
 
+  // Check if the selected answer is correct
   if (selectedOption === question.correct) {
     feedback.textContent = `Correct! ${question.rationale}`;
     feedback.style.color = "green";
@@ -53,13 +54,19 @@ function evaluateAnswer(selectedOption, question) {
   } else {
     feedback.textContent = `Incorrect. ${question.rationale}`;
     feedback.style.color = "red";
+    incorrectAnswers.push(question); // Add incorrect question for review
   }
 
   setTimeout(() => {
     currentIndex++;
-    loadQuestion();
+    if (currentIndex < questionPool.length) {
+      loadQuestion();
+    } else {
+      showQuizResults(); // Display results after last question
+    }
   }, 2000);
 }
+
 
 
 function showQuizResults() {
