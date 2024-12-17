@@ -128,26 +128,28 @@ footer {
   background-color: #218838;
 }/* General button styling for both quiz and paragraph sections */
 button {
-  background-color: #add8e6; /* Light blue color */
-  color: black; /* Black text */
+  background-color: lightblue;
+  color: black;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  margin: 5px;
   border: none;
-  border-radius: 8px; /* Rounded corners */
-  padding: 10px 20px; /* Button size */
-  font-size: 16px; /* Text size */
+  border-radius: 5px;
   cursor: pointer;
-  margin: 5px; /* Space between buttons */
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #87ceeb; /* Slightly darker blue on hover */
-}
-
-button:active {
-  background-color: #6495ed; /* Active state - even darker blue */
+  background-color: #add8e6;
 }
 
 button.selected {
-  background-color: #0077cc; /* Selected option highlight */
-  color: white; /* White text for selected option */
+  background-color: #0077cc;
+  color: white;
 }
+
+.paragraph-button {
+  margin-right: 10px;
+}
+
 
