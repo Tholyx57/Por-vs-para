@@ -42,11 +42,11 @@ function loadQuestion() {
     <button id="submit-btn">Submit</button>
   `;
 
-  document.getElementById("submit-btn").addEventListener("click", evaluateAnswer);
+  document.getElementById("submit-btn").addEventListener("click", evaluateQuizAnswer);
 }
 
 // Evaluate quiz answers
-function evaluateAnswer() {
+function evaluateQuizAnswer() {
   const selectedOption = document.querySelector('input[name="answer"]:checked');
   const feedback = document.getElementById("feedback");
 
@@ -122,11 +122,11 @@ function loadParagraph() {
   html += `<button id="submit-paragraph">Submit</button>`;
   paragraphContainer.innerHTML = html;
 
-  document.getElementById("submit-paragraph").addEventListener("click", evaluateParagraph);
+  document.getElementById("submit-paragraph").addEventListener("click", evaluateParagraphAnswer);
 }
 
-// Evaluate paragraph practice
-function evaluateParagraph() {
+// Evaluate paragraph practice answers
+function evaluateParagraphAnswer() {
   const currentParagraph = paragraphPool[paragraphIndex];
   const feedback = document.getElementById("paragraph-feedback");
   const nextButton = document.getElementById("next-paragraph");
@@ -155,10 +155,10 @@ function evaluateParagraph() {
   }
 
   nextButton.style.display = "block";
-  nextButton.addEventListener("click", () => {
+  nextButton.onclick = () => {
     paragraphIndex++;
     loadParagraph();
-  });
+  };
 }
 
 // Initialize the quiz and paragraph practice
