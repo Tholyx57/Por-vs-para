@@ -169,7 +169,6 @@ function evaluateParagraphAnswer() {
   };
 }
 
-
 // ========================= INITIALIZATION =========================
 function initQuiz() {
   shuffleQuestions(questionPool);
