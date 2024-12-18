@@ -38,9 +38,7 @@ function loadQuestion() {
     const button = document.createElement("button");
     button.textContent = option;
     button.className = "quiz-button";
-    button.addEventListener("click", () =>
-      evaluateAnswer(option, currentQuestion)
-    );
+    button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
     optionsContainer.appendChild(button);
   });
 
@@ -70,18 +68,15 @@ function evaluateAnswer(selectedOption, question) {
     incorrectAnswers.push(question);
   }
 
-  // Clear the previous timeout to avoid overlap
-  clearTimeout(feedbackTimeout);
-
-  // Hide the feedback after 5 seconds
+  clearTimeout(feedbackTimeout); // Clear the previous timeout
   feedbackTimeout = setTimeout(() => {
     feedback.textContent = "";
-  }, 5000);
+  }, 3000);
 
   setTimeout(() => {
     currentIndex++;
     loadQuestion();
-  }, 5000);
+  }, 3000);
 }
 
 function showQuizResults() {
@@ -144,9 +139,7 @@ function loadParagraph() {
     const button = document.createElement("button");
     button.textContent = option;
     button.className = "paragraph-button";
-    button.addEventListener("click", () =>
-      handleParagraphSelection(option, userAnswers, currentParagraph)
-    );
+    button.addEventListener("click", () => handleParagraphSelection(option, userAnswers, currentParagraph));
     optionsContainer.appendChild(button);
   });
 
@@ -155,8 +148,7 @@ function loadParagraph() {
   const submitButton = document.createElement("button");
   submitButton.textContent = "Submit Paragraph";
   submitButton.className = "paragraph-button";
-  submitButton.onclick = () =>
-    evaluateParagraphAnswer(userAnswers, currentParagraph);
+  submitButton.onclick = () => evaluateParagraphAnswer(userAnswers, currentParagraph);
   paragraphContainer.appendChild(submitButton);
 }
 
@@ -190,9 +182,7 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     paragraphCorrect++;
   } else {
     feedback.innerHTML = `<p style="color: red;">Incorrect. Explanations:</p>`;
-    const rationaleList = currentParagraph.rationales
-      .map((r) => `<li>${r}</li>`)
-      .join("");
+    const rationaleList = currentParagraph.rationales.map((r) => `<li>${r}</li>`).join("");
     feedback.innerHTML += `<ul>${rationaleList}</ul>`;
     paragraphIncorrect++;
   }
@@ -207,9 +197,7 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
 
 function showParagraphResults() {
   const paragraphContainer = document.getElementById("paragraph-container");
-  const percentage = Math.round(
-    (paragraphCorrect / paragraphPool.length) * 100
-  );
+  const percentage = Math.round((paragraphCorrect / paragraphPool.length) * 100);
   let performanceMessage;
 
   if (percentage === 100) {
