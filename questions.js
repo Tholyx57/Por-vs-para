@@ -521,6 +521,106 @@ const paragraphPool = [
       "Conozco is used for having familiarity now (with traditions and customs)."
     ],
     category: "Conocer vs. Saber"
+  }{
+    text: "El edificio de la universidad ___ muy antiguo y tiene más de cien años, pero ahora ___ en reparación porque sufrió daños en la última tormenta.",
+    answers: ["es", "está"],
+    options: ["es", "está"],
+    rationales: [
+      "Es is used to describe a permanent characteristic (the building being old).",
+      "Está is used for a temporary state or condition (being under repair)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "Mis padres ___ felices porque hoy celebramos su aniversario de bodas. La celebración ___ en el restaurante donde se conocieron hace treinta años.",
+    answers: ["están", "es"],
+    options: ["están", "es"],
+    rationales: [
+      "Están is used to express a temporary emotional state (being happy).",
+      "Es is used for the location of an event (the celebration)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "El examen de matemáticas ___ bastante difícil, pero todos mis compañeros ___ listos para enfrentar el desafío después de estudiar mucho.",
+    answers: ["es", "están"],
+    options: ["es", "están"],
+    rationales: [
+      "Es is used for describing the nature of something (the exam being difficult).",
+      "Están is used for a temporary state (students being ready)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "Mi mejor amiga ___ muy simpática y siempre ayuda a los demás. Sin embargo, hoy ___ un poco cansada porque trabajó hasta muy tarde anoche.",
+    answers: ["es", "está"],
+    options: ["es", "está"],
+    rationales: [
+      "Es is used for describing an inherent personality trait (being kind).",
+      "Está is used for a temporary physical condition (being tired)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "Durante las vacaciones, el hotel donde nos hospedamos ___ muy lujoso y todas las habitaciones ___ limpias y ordenadas cada mañana.",
+    answers: ["es", "están"],
+    options: ["es", "están"],
+    rationales: [
+      "Es is used to describe a defining characteristic (the hotel being luxurious).",
+      "Están is used to describe temporary states (the rooms being clean and organized)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "Los resultados del proyecto ___ impresionantes, pero el equipo de investigación todavía ___ preocupado por los próximos pasos.",
+    answers: ["son", "está"],
+    options: ["son", "está"],
+    rationales: [
+      "Son is used for describing a general or permanent quality (the results being impressive).",
+      "Está is used for a temporary emotional state (the team being worried)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "La conferencia ___ en el auditorio principal del campus, y todos los estudiantes ___ emocionados por conocer a la famosa escritora invitada.",
+    answers: ["es", "están"],
+    options: ["es", "están"],
+    rationales: [
+      "Es is used to indicate the location of an event (the conference).",
+      "Están is used for temporary emotional states (students being excited)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "Mi abuelo ___ un excelente carpintero y siempre hace muebles hermosos. Ahora mismo ___ trabajando en un nuevo proyecto para la casa.",
+    answers: ["es", "está"],
+    options: ["es", "está"],
+    rationales: [
+      "Es is used to describe a profession or characteristic (being a carpenter).",
+      "Está is used to describe an ongoing action (working on a project)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "Las puertas de la iglesia ___ de madera maciza y tienen detalles muy antiguos. Hoy ___ abiertas porque hay una celebración especial.",
+    answers: ["son", "están"],
+    options: ["son", "están"],
+    rationales: [
+      "Son is used for describing a permanent characteristic (the doors being made of solid wood).",
+      "Están is used for a temporary state (the doors being open)."
+    ],
+    category: "Ser vs. Estar"
+  },
+  {
+    text: "Mis primos ___ de Argentina, pero ahora ___ viviendo en España porque consiguieron un trabajo temporal en Madrid.",
+    answers: ["son", "están"],
+    options: ["son", "están"],
+    rationales: [
+      "Son is used for expressing origin (being from Argentina).",
+      "Están is used for a temporary action or state (living in Spain temporarily)."
+    ],
+    category: "Ser vs. Estar"
   }
+
 
   ];
