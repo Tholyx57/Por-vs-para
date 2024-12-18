@@ -38,7 +38,9 @@ function loadQuestion() {
     const button = document.createElement("button");
     button.textContent = option;
     button.className = "quiz-button";
-    button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
+    button.addEventListener("click", () =>
+      evaluateAnswer(option, currentQuestion)
+    );
     optionsContainer.appendChild(button);
   });
 
@@ -47,7 +49,7 @@ function loadQuestion() {
 
   if (!document.getElementById("grade-quiz")) {
     const gradeButton = document.createElement("button");
-    gradeButton.textContent = "Grade Quiz";
+    gradeButton.textContent = "Grade Now";
     gradeButton.className = "quiz-button";
     gradeButton.id = "grade-quiz";
     gradeButton.addEventListener("click", showQuizResults);
@@ -65,6 +67,7 @@ function evaluateAnswer(selectedOption, question) {
   } else {
     feedback.textContent = `Incorrect. ${question.rationale}`;
     feedback.style.color = "red";
+    incorrectAnswers.push(question);
   }
 
   // Clear the previous timeout to avoid overlap
@@ -87,7 +90,7 @@ function showQuizResults() {
   feedback.textContent = ""; // Clear any lingering feedback
   clearTimeout(feedbackTimeout);
 
-  const percentage = Math.round((totalScore / currentIndex) * 100);
+  const percentage = Math.round((totalScore / questionPool.length) * 100);
   let performanceMessage;
 
   if (percentage === 100) {
@@ -102,23 +105,11 @@ function showQuizResults() {
 
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
-    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${currentIndex}</p>
+    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
     <p>Percentage: <span style="color: blue;">${percentage}%</span></p>
     <p>${performanceMessage}</p>
   `;
-
-  const restartButton = document.createElement("button");
-  restartButton.textContent = "Restart Quiz";
-  restartButton.className = "quiz-button";
-  restartButton.onclick = () => {
-    currentIndex = 0;
-    totalScore = 0;
-    shuffleQuestions(questionPool);
-    loadQuestion();
-  };
-  quizContainer.appendChild(restartButton);
 }
-
 
 // ========================= PARAGRAPH SECTION =========================
 function loadParagraph() {
@@ -131,26 +122,7 @@ function loadParagraph() {
   nextButton.style.display = "none";
 
   if (paragraphIndex >= paragraphPool.length) {
-    const percentage = Math.round((paragraphCorrect / paragraphPool.length) * 100);
-    let performanceMessage;
-
-    if (percentage === 100) {
-      performanceMessage = "🌟 Perfect! Outstanding work!";
-    } else if (percentage >= 80) {
-      performanceMessage = "👍 Great job! You're doing really well.";
-    } else if (percentage >= 50) {
-      performanceMessage = "🙂 Good effort! Keep practicing.";
-    } else {
-      performanceMessage = "🙁 Don't give up! Review the material and try again.";
-    }
-
-    paragraphContainer.innerHTML = `
-      <h2>Paragraph Practice Complete!</h2>
-      <p>Correct: <span style="color: green;">${paragraphCorrect}</span></p>
-      <p>Incorrect: <span style="color: red;">${paragraphIncorrect}</span></p>
-      <p>Percentage: <span style="color: blue;">${percentage}%</span></p>
-      <p>${performanceMessage}</p>
-    `;
+    showParagraphResults();
     return;
   }
 
@@ -188,7 +160,6 @@ function loadParagraph() {
   paragraphContainer.appendChild(submitButton);
 }
 
-
 function handleParagraphSelection(option, userAnswers, currentParagraph) {
   for (let i = 0; i < userAnswers.length; i++) {
     if (!userAnswers[i]) {
@@ -219,7 +190,9 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     paragraphCorrect++;
   } else {
     feedback.innerHTML = `<p style="color: red;">Incorrect. Explanations:</p>`;
-    const rationaleList = currentParagraph.rationales.map(r => `<li>${r}</li>`).join("");
+    const rationaleList = currentParagraph.rationales
+      .map((r) => `<li>${r}</li>`)
+      .join("");
     feedback.innerHTML += `<ul>${rationaleList}</ul>`;
     paragraphIncorrect++;
   }
@@ -230,6 +203,32 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     paragraphIndex++;
     loadParagraph();
   };
+}
+
+function showParagraphResults() {
+  const paragraphContainer = document.getElementById("paragraph-container");
+  const percentage = Math.round(
+    (paragraphCorrect / paragraphPool.length) * 100
+  );
+  let performanceMessage;
+
+  if (percentage === 100) {
+    performanceMessage = "🌟 Outstanding performance!";
+  } else if (percentage >= 80) {
+    performanceMessage = "👍 Great job! Almost perfect.";
+  } else if (percentage >= 50) {
+    performanceMessage = "🙂 Good effort! Keep practicing.";
+  } else {
+    performanceMessage = "🙁 Needs improvement. Try again.";
+  }
+
+  paragraphContainer.innerHTML = `
+    <h2>Paragraph Practice Complete!</h2>
+    <p>Correct: <span style="color: green;">${paragraphCorrect}</span></p>
+    <p>Incorrect: <span style="color: red;">${paragraphIncorrect}</span></p>
+    <p>Percentage: <span style="color: blue;">${percentage}%</span></p>
+    <p>${performanceMessage}</p>
+  `;
 }
 
 // ========================= INITIALIZATION =========================
