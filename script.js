@@ -148,6 +148,8 @@ const submitButton = document.createElement("button");
 submitButton.textContent = "Grade Now";
 submitButton.className = "gray-button"; // Apply gray-button class
 submitButton.id = "submit-paragraph";
+submitButton.onclick = () => evaluateParagraphAnswer(userAnswers, currentParagraph);
+paragraphContainer.appendChild(submitButton);
 }
 function handleParagraphSelection(option, userAnswers, currentParagraph) {
   for (let i = 0; i < userAnswers.length; i++) {
