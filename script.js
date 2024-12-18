@@ -87,11 +87,38 @@ function showQuizResults() {
   feedback.textContent = ""; // Clear any lingering feedback
   clearTimeout(feedbackTimeout);
 
+  const percentage = Math.round((totalScore / currentIndex) * 100);
+  let performanceMessage;
+
+  if (percentage === 100) {
+    performanceMessage = "🌟 Perfect score! Excellent work!";
+  } else if (percentage >= 80) {
+    performanceMessage = "👍 Great job! Keep practicing to reach perfection.";
+  } else if (percentage >= 50) {
+    performanceMessage = "🙂 Not bad! A little more practice and you'll improve.";
+  } else {
+    performanceMessage = "🙁 Keep trying! Review the material and try again.";
+  }
+
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
     <p>Your Score: <span style="color: green;">${totalScore}</span> / ${currentIndex}</p>
+    <p>Percentage: <span style="color: blue;">${percentage}%</span></p>
+    <p>${performanceMessage}</p>
   `;
+
+  const restartButton = document.createElement("button");
+  restartButton.textContent = "Restart Quiz";
+  restartButton.className = "quiz-button";
+  restartButton.onclick = () => {
+    currentIndex = 0;
+    totalScore = 0;
+    shuffleQuestions(questionPool);
+    loadQuestion();
+  };
+  quizContainer.appendChild(restartButton);
 }
+
 
 // ========================= PARAGRAPH SECTION =========================
 function loadParagraph() {
@@ -104,10 +131,25 @@ function loadParagraph() {
   nextButton.style.display = "none";
 
   if (paragraphIndex >= paragraphPool.length) {
+    const percentage = Math.round((paragraphCorrect / paragraphPool.length) * 100);
+    let performanceMessage;
+
+    if (percentage === 100) {
+      performanceMessage = "🌟 Perfect! Outstanding work!";
+    } else if (percentage >= 80) {
+      performanceMessage = "👍 Great job! You're doing really well.";
+    } else if (percentage >= 50) {
+      performanceMessage = "🙂 Good effort! Keep practicing.";
+    } else {
+      performanceMessage = "🙁 Don't give up! Review the material and try again.";
+    }
+
     paragraphContainer.innerHTML = `
       <h2>Paragraph Practice Complete!</h2>
       <p>Correct: <span style="color: green;">${paragraphCorrect}</span></p>
       <p>Incorrect: <span style="color: red;">${paragraphIncorrect}</span></p>
+      <p>Percentage: <span style="color: blue;">${percentage}%</span></p>
+      <p>${performanceMessage}</p>
     `;
     return;
   }
@@ -130,7 +172,9 @@ function loadParagraph() {
     const button = document.createElement("button");
     button.textContent = option;
     button.className = "paragraph-button";
-    button.addEventListener("click", () => handleParagraphSelection(option, userAnswers, currentParagraph));
+    button.addEventListener("click", () =>
+      handleParagraphSelection(option, userAnswers, currentParagraph)
+    );
     optionsContainer.appendChild(button);
   });
 
@@ -139,9 +183,11 @@ function loadParagraph() {
   const submitButton = document.createElement("button");
   submitButton.textContent = "Submit Paragraph";
   submitButton.className = "paragraph-button";
-  submitButton.onclick = () => evaluateParagraphAnswer(userAnswers, currentParagraph);
+  submitButton.onclick = () =>
+    evaluateParagraphAnswer(userAnswers, currentParagraph);
   paragraphContainer.appendChild(submitButton);
 }
+
 
 function handleParagraphSelection(option, userAnswers, currentParagraph) {
   for (let i = 0; i < userAnswers.length; i++) {
