@@ -145,11 +145,10 @@ function loadParagraph() {
 
   paragraphContainer.appendChild(optionsContainer);
 
- const submitButton = document.createElement("button");
+const submitButton = document.createElement("button");
 submitButton.textContent = "Grade Now";
-submitButton.className = "paragraph-button gray-button"; // Added gray-button class
-submitButton.onclick = () => evaluateParagraphAnswer(userAnswers, currentParagraph);
-paragraphContainer.appendChild(submitButton);
+submitButton.className = "gray-button"; // Apply gray-button class
+submitButton.id = "submit-paragraph";
 }
 function handleParagraphSelection(option, userAnswers, currentParagraph) {
   for (let i = 0; i < userAnswers.length; i++) {
