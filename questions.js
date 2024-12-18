@@ -723,6 +723,107 @@ const paragraphPool = [
     "Quiero is used to express not wanting to do something alone (travel alone)."
   ],
   category: "Querer vs. Gustar"
+},
+{
+  text: "A mí no me ___ mucho las películas de terror, pero mis amigos siempre ___ verlas en el cine.",
+  answers: ["gustan", "quieren"],
+  options: ["gustan", "quieren"],
+  rationales: [
+    "Gustan is used to express liking something (movies).",
+    "Quieren is used to express wanting to do something (watching movies)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "Mis hermanos siempre me ___ salir a cenar con ellos, pero a mí no me ___ mucho los restaurantes caros.",
+  answers: ["quieren", "gustan"],
+  options: ["quieren", "gustan"],
+  rationales: [
+    "Quieren is used to express the desire for someone to do something (join them).",
+    "Gustan is used to express liking or not liking something (expensive restaurants)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "Aunque me ___ los deportes, no ___ practicar fútbol porque no soy muy bueno.",
+  answers: ["gustan", "quiero"],
+  options: ["gustan", "quiero"],
+  rationales: [
+    "Gustan is used to express liking sports.",
+    "Quiero is used to express not wanting to do something (playing soccer)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "A mi madre le ___ cocinar para la familia, pero no siempre ___ el tiempo necesario.",
+  answers: ["gusta", "quiere"],
+  options: ["gusta", "quiere"],
+  rationales: [
+    "Gusta is used to express liking to do something (cooking).",
+    "Quiere is used to express the desire to do something (having time)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "A nosotros no nos ___ los lugares ruidosos, pero ___ ir al concierto porque era una banda famosa.",
+  answers: ["gustan", "queríamos"],
+  options: ["gustan", "queríamos"],
+  rationales: [
+    "Gustan is used to express not liking noisy places.",
+    "Queríamos is used to express the desire to do something in the past (go to the concert)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "Mi sobrino siempre dice que le ___ los dulces, pero después no los ___ comer.",
+  answers: ["gustan", "quiere"],
+  options: ["gustan", "quiere"],
+  rationales: [
+    "Gustan is used to express liking something (sweets).",
+    "Quiere is used to express wanting to do something (eating them)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "A mi profesor le ___ que participemos en clase, pero no siempre ___ hacer preguntas porque me da vergüenza.",
+  answers: ["gusta", "quiero"],
+  options: ["gusta", "quiero"],
+  rationales: [
+    "Gusta is used to express liking something (students participating).",
+    "Quiero is used to express the desire to do something (ask questions)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "Mis amigos y yo ___ ver una película, pero no nos ___ las opciones disponibles en el cine.",
+  answers: ["queremos", "gustaron"],
+  options: ["queremos", "gustaron"],
+  rationales: [
+    "Queremos is used to express wanting to do something (watch a movie).",
+    "Gustaron is used to express not liking something in the past (movie options)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "Mi primo dice que no le ___ los gatos, pero ahora ___ adoptar uno porque su hijo lo pidió.",
+  answers: ["gustan", "quiere"],
+  options: ["gustan", "quiere"],
+  rationales: [
+    "Gustan is used to express liking or not liking something (cats).",
+    "Quiere is used to express the desire to do something (adopting a cat)."
+  ],
+  category: "Querer vs. Gustar"
+},
+{
+  text: "Aunque me ___ la idea de viajar, no ___ ir solo porque prefiero la compañía de mis amigos.",
+  answers: ["gusta", "quiero"],
+  options: ["gusta", "quiero"],
+  rationales: [
+    "Gusta is used to express liking an idea (traveling).",
+    "Quiero is used to express not wanting to do something alone (travel alone)."
+  ],
+  category: "Querer vs. Gustar"
 }
+
 
   ];
