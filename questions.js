@@ -622,6 +622,4 @@ const paragraphPool = [
     ],
     category: "Ser vs. Estar"
   }
-
-
   ];
