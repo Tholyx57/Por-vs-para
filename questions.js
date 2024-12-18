@@ -251,7 +251,8 @@ const questionPool = [
   options: ["conocen", "saben"],
   rationale: "Conocer is used for familiarity with places (knowing Madrid well).",
   category: "Conocer vs. Saber",
-},{
+},
+{
   question: "¿Ustedes ___ quién es el autor de este libro tan interesante?",
   correct: "saben",
   options: ["conocen", "saben"],
@@ -422,7 +423,7 @@ const paragraphPool = [
       "Sabía is used for knowing facts or information (who the musicians were)."
     ],
     category: "Conocer vs. Saber"
-  }{
+  },
     text: "Durante la conferencia, el profesor habló sobre un autor del siglo XIX que yo no ___. Sin embargo, después de investigar más, ahora ___ varias obras escritas por él.",
     answers: ["conocía", "sé"],
     options: ["conocía", "sé"],
