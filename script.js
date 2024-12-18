@@ -46,13 +46,13 @@ function loadQuestion() {
   quizContainer.appendChild(optionsContainer);
 
   if (!document.getElementById("grade-quiz")) {
-    const gradeButton = document.createElement("button");
-    gradeButton.textContent = "Grade Now";
-    gradeButton.className = "quiz-button";
-    gradeButton.id = "grade-quiz";
-    gradeButton.addEventListener("click", showQuizResults);
-    quizContainer.appendChild(gradeButton);
-  }
+  const gradeButton = document.createElement("button");
+  gradeButton.textContent = "Grade Now";
+  gradeButton.className = "quiz-button gray-button"; // Added gray-button class
+  gradeButton.id = "grade-quiz";
+  gradeButton.addEventListener("click", showQuizResults);
+  quizContainer.appendChild(gradeButton);
+
 }
 
 function evaluateAnswer(selectedOption, question) {
