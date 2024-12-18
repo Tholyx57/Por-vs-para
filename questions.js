@@ -523,7 +523,8 @@ const paragraphPool = [
       "Conozco is used for having familiarity now (with traditions and customs)."
     ],
     category: "Conocer vs. Saber"
-  }{
+  },
+  {
     text: "El edificio de la universidad ___ muy antiguo y tiene más de cien años, pero ahora ___ en reparación porque sufrió daños en la última tormenta.",
     answers: ["es", "está"],
     options: ["es", "está"],
