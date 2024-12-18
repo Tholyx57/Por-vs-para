@@ -424,6 +424,7 @@ const paragraphPool = [
     ],
     category: "Conocer vs. Saber"
   },
+  {
     text: "Durante la conferencia, el profesor habló sobre un autor del siglo XIX que yo no ___. Sin embargo, después de investigar más, ahora ___ varias obras escritas por él.",
     answers: ["conocía", "sé"],
     options: ["conocía", "sé"],
