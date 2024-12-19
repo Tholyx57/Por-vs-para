@@ -52,7 +52,7 @@ function loadQuestion() {
   gradeButton.id = "grade-quiz";
   gradeButton.addEventListener("click", showQuizResults);
   quizContainer.appendChild(gradeButton);
-}
+  }
 
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
