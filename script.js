@@ -16,6 +16,7 @@ function shuffleQuestions(array) {
 }
 
 // ========================= QUIZ SECTION =========================
+// Corrected `loadQuestion`
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = ""; // Clear previous content
@@ -46,13 +47,14 @@ function loadQuestion() {
   quizContainer.appendChild(optionsContainer);
 
   if (!document.getElementById("grade-quiz")) {
-  const gradeButton = document.createElement("button");
-  gradeButton.textContent = "Grade Now";
-  gradeButton.className = "quiz-button gray-button"; // Added gray-button class
-  gradeButton.id = "grade-quiz";
-  gradeButton.addEventListener("click", showQuizResults);
-  quizContainer.appendChild(gradeButton);
+    const gradeButton = document.createElement("button");
+    gradeButton.textContent = "Grade Now";
+    gradeButton.className = "quiz-button gray-button"; // Added gray-button class
+    gradeButton.id = "grade-quiz";
+    gradeButton.addEventListener("click", showQuizResults);
+    quizContainer.appendChild(gradeButton);
   }
+}
 
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
