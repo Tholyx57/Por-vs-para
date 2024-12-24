@@ -1,14 +1,13 @@
-/* General Reset */
+/* Reset Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body Styling */
 body {
   font-family: 'Arial', sans-serif;
-  background: #f7f9fc;
+  background: #f9f9f9;
   color: #333;
   line-height: 1.6;
   display: flex;
@@ -17,16 +16,14 @@ body {
 }
 
 header {
+  background: linear-gradient(to right, #6a9cc5, #2d7ebd);
+  color: #fff;
   text-align: center;
   padding: 20px;
-  background: linear-gradient(to right, #5a99e2, #1c78c3);
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
@@ -37,12 +34,12 @@ header p {
 main {
   flex: 1;
   width: 90%;
-  max-width: 900px;
-  margin: 30px auto;
-  background: white;
+  max-width: 800px;
+  margin: 20px auto;
+  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 section {
@@ -50,65 +47,54 @@ section {
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 20px;
-  color: #1c78c3;
+  color: #2d7ebd;
 }
 
 .feedback-box {
-  margin-top: 20px;
-  padding: 15px;
+  margin-top: 15px;
+  padding: 10px;
   border-radius: 8px;
-  background: #f9f9f9;
-  color: #333;
   font-size: 1rem;
-  border: 1px solid #dce4ea;
+  background: #f1f1f1;
+  color: #333;
 }
 
-#paragraph-feedback ul {
-  list-style: square;
-  margin-top: 10px;
-  padding-left: 20px;
-}
-
-/* Buttons */
 button {
-  background: #5a99e2;
+  display: inline-block;
+  background: #2d7ebd;
   color: white;
   border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: bold;
-  transition: background 0.3s ease;
+  margin: 10px 5px;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background: #1c78c3;
+  background: #235a9b;
 }
 
-button.primary-button {
-  display: block;
-  margin: 20px auto 0;
-}
-
-#next-paragraph {
+.primary-button {
   display: none;
+  margin: 20px auto;
 }
 
 .blank {
   display: inline-block;
   padding: 5px 10px;
   margin: 0 5px;
-  background: #f2f2f2;
+  background: #ececec;
   border-radius: 5px;
   color: #333;
 }
 
 footer {
-  text-align: center;
-  padding: 15px;
-  background: #5a99e2;
+  background: #6a9cc5;
   color: white;
+  text-align: center;
+  padding: 10px;
 }
