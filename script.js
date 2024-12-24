@@ -2,8 +2,11 @@
 let currentIndex = 0; // For quiz
 let paragraphIndex = 0; // For paragraphs
 let totalScore = 0;
+let incorrectAnswers = [];
 let paragraphCorrect = 0;
 let paragraphIncorrect = 0;
+let feedbackTimeout; // To manage clearing feedback timeout
+let rationaleTimeout; // To clear rationale timeout
 
 // Shuffle Questions (for randomness)
 function shuffleQuestions(array) {
@@ -31,14 +34,10 @@ function loadQuestion() {
 
   // Options as buttons
   const optionsContainer = document.createElement("div");
-  optionsContainer.style.marginTop = "20px";
-
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
-    button.style.padding = "10px";
-    button.style.margin = "5px";
-    button.style.fontSize = "1.1em";
-    button.innerHTML = `${option}`;
+    button.textContent = option;
+    button.classList.add("quiz-button");
     button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
     optionsContainer.appendChild(button);
   });
@@ -56,15 +55,17 @@ function evaluateAnswer(selectedOption, question) {
 
   if (selectedOption === question.correct) {
     feedback.textContent = `Correct! ${question.rationale}`;
-    feedback.style.color = "green";
     totalScore++;
   } else {
     feedback.textContent = `Incorrect. ${question.rationale}`;
-    feedback.style.color = "red";
+    incorrectAnswers.push(question); // Add incorrect question for review
   }
 
+  feedback.style.color = "green";
+
   // Clear feedback and load next question after 4 seconds
-  setTimeout(() => {
+  clearTimeout(feedbackTimeout);
+  feedbackTimeout = setTimeout(() => {
     feedback.textContent = "";
     currentIndex++;
     loadQuestion();
@@ -73,14 +74,29 @@ function evaluateAnswer(selectedOption, question) {
 
 function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
-  const feedback = document.getElementById("feedback");
 
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
-    <p>Your Score: ${totalScore} / ${questionPool.length}</p>
+    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
+    <p>Incorrect Answers: <span style="color: red;">${incorrectAnswers.length}</span></p>
   `;
 
-  feedback.textContent = "";
+  if (incorrectAnswers.length > 0) {
+    const reviewSection = document.createElement("div");
+    reviewSection.innerHTML = "<h3>Review Incorrect Questions:</h3>";
+
+    incorrectAnswers.forEach((question, index) => {
+      const questionReview = document.createElement("div");
+      questionReview.innerHTML = `
+        <p><strong>${index + 1}. ${question.question}</strong></p>
+        <p>Correct Answer: <strong>${question.correct}</strong></p>
+        <p>Explanation: ${question.rationale}</p>
+      `;
+      reviewSection.appendChild(questionReview);
+    });
+
+    quizContainer.appendChild(reviewSection);
+  }
 }
 
 // ========================= PARAGRAPH SECTION =========================
@@ -103,79 +119,92 @@ function loadParagraph() {
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
-  const paragraphText = document.createElement("p");
-  paragraphText.innerHTML = currentParagraph.text.replace(/___/g, '<span class="blank">___</span>');
-  paragraphContainer.appendChild(paragraphText);
+  let userAnswers = Array(currentParagraph.answers.length).fill("");
 
-  // Options as buttons
+  let paragraphHTML = currentParagraph.text.split("___").map((part, i) => {
+    if (i < currentParagraph.answers.length) {
+      return `${part} <span class="blank" id="blank-${i}">___</span>`;
+    }
+    return part;
+  }).join("");
+
+  paragraphContainer.innerHTML = `<p>${paragraphHTML}</p>`;
+
   const optionsContainer = document.createElement("div");
-  currentParagraph.options.forEach((option) => {
+  const uniqueOptions = [...new Set(currentParagraph.options)];
+  uniqueOptions.forEach((option) => {
     const button = document.createElement("button");
-    button.style.padding = "10px";
-    button.style.margin = "5px";
-    button.style.fontSize = "1.1em";
     button.textContent = option;
-    button.addEventListener("click", () => handleParagraphSelection(option, currentParagraph));
+    button.classList.add("paragraph-button");
+    button.addEventListener("click", () => handleParagraphSelection(option, userAnswers, currentParagraph));
     optionsContainer.appendChild(button);
   });
 
   paragraphContainer.appendChild(optionsContainer);
+
+  const submitButton = document.createElement("button");
+  submitButton.textContent = "Submit";
+  submitButton.id = "submit-paragraph";
+  submitButton.classList.add("paragraph-button");
+  submitButton.addEventListener("click", () => evaluateParagraphAnswer(userAnswers, currentParagraph));
+  paragraphContainer.appendChild(submitButton);
 }
 
-function handleParagraphSelection(option, currentParagraph) {
-  const blanks = document.querySelectorAll(".blank");
-  for (let i = 0; i < blanks.length; i++) {
-    if (blanks[i].textContent === "___") {
-      blanks[i].textContent = option;
-      blanks[i].style.color = "blue";
+function handleParagraphSelection(option, userAnswers, currentParagraph) {
+  for (let i = 0; i < userAnswers.length; i++) {
+    if (!userAnswers[i]) {
+      userAnswers[i] = option;
+      const blankElement = document.getElementById(`blank-${i}`);
+      blankElement.textContent = option;
       break;
     }
   }
 }
 
-function evaluateParagraphAnswer(currentParagraph) {
-  const blanks = document.querySelectorAll(".blank");
+function evaluateParagraphAnswer(userAnswers, currentParagraph) {
   const feedback = document.getElementById("paragraph-feedback");
-
   let allCorrect = true;
-  for (let i = 0; i < currentParagraph.answers.length; i++) {
-    if (blanks[i].textContent === currentParagraph.answers[i]) {
-      blanks[i].style.color = "green";
-    } else {
-      blanks[i].style.color = "red";
+
+  userAnswers.forEach((answer, i) => {
+    if (answer !== currentParagraph.answers[i]) {
       allCorrect = false;
+      document.getElementById(`blank-${i}`).style.color = "red";
+    } else {
+      document.getElementById(`blank-${i}`).style.color = "green";
     }
-  }
+  });
 
   if (allCorrect) {
-    feedback.textContent = "Correct! " + currentParagraph.rationales.join(" ");
+    feedback.textContent = "Correct!";
     feedback.style.color = "green";
     paragraphCorrect++;
   } else {
-    feedback.textContent = "Incorrect. " + currentParagraph.rationales.join(" ");
+    feedback.textContent = "Incorrect. Review the correct answers:";
     feedback.style.color = "red";
+    const rationaleList = currentParagraph.rationales.map((r) => `<li>${r}</li>`).join("");
+    feedback.innerHTML += `<ul>${rationaleList}</ul>`;
     paragraphIncorrect++;
   }
 
-  // Show feedback for 4 seconds
-  setTimeout(() => {
+  // Show rationale for 4 seconds
+  clearTimeout(rationaleTimeout);
+  rationaleTimeout = setTimeout(() => {
     feedback.textContent = "";
-    document.getElementById("next-paragraph").style.display = "block";
   }, 4000);
+
+  const nextButton = document.getElementById("next-paragraph");
+  nextButton.style.display = "block";
+  nextButton.onclick = () => {
+    paragraphIndex++;
+    loadParagraph();
+  };
 }
 
 // ========================= INITIALIZATION =========================
 function initQuiz() {
   shuffleQuestions(questionPool);
-  shuffleQuestions(paragraphPool);
   loadQuestion();
   loadParagraph();
-
-  const nextParagraphButton = document.getElementById("next-paragraph");
-  nextParagraphButton.addEventListener("click", () => {
-    paragraphIndex++;
-    loadParagraph();
-  });
 }
 
 document.addEventListener("DOMContentLoaded", initQuiz);
