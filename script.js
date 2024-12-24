@@ -56,10 +56,8 @@ function evaluateAnswer(selectedOption, question) {
     feedback.style.color = "red";
   }
 
-  setTimeout(() => {
-    currentIndex++;
-    loadQuestion();
-  }, 3000);
+  currentIndex++;
+  loadQuestion();
 }
 
 function showQuizResults() {
@@ -115,6 +113,10 @@ function handleParagraphSelection(option, userAnswers, currentParagraph) {
       break;
     }
   }
+
+  if (userAnswers.every((answer, i) => answer)) {
+    evaluateParagraphAnswer(userAnswers, currentParagraph);
+  }
 }
 
 function evaluateParagraphAnswer(userAnswers, currentParagraph) {
@@ -131,13 +133,17 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     }
   });
 
-  feedback.innerHTML = allCorrect
-    ? `<p style="color: green;">Correct!</p>`
-    : `<p style="color: red;">Incorrect. Review the rationale:</p>`;
+  if (allCorrect) {
+    feedback.innerHTML = `<p style="color: green;">Correct! Translation: ${currentParagraph.translation}</p>`;
+    paragraphCorrect++;
+  } else {
+    feedback.innerHTML = `<p style="color: red;">Incorrect. Review the rationale:</p>`;
+    feedback.innerHTML += `<ul>${currentParagraph.rationales
+      .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
+      .join("")}</ul>`;
+    paragraphIncorrect++;
+  }
 
-  feedback.innerHTML += `<ul>${currentParagraph.rationales
-    .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
-    .join("")}</ul>`;
   document.getElementById("next-paragraph").style.display = "block";
 }
 
