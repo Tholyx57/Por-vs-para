@@ -178,23 +178,36 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     feedback.textContent = "Correct!";
     feedback.style.color = "green";
     paragraphCorrect++;
-    showParagraphRationale(currentParagraph.rationales);
   } else {
     feedback.textContent = "Incorrect. Try Again.";
     feedback.style.color = "red";
-    showParagraphRationale(currentParagraph.rationales);
-    const tryAgainButton = document.createElement("button");
-    tryAgainButton.textContent = "Try Again";
-    tryAgainButton.classList.add("paragraph-button");
-    tryAgainButton.addEventListener("click", () => loadParagraph());
-    feedback.appendChild(tryAgainButton);
   }
+
+  // Show rationale
+  showParagraphRationale(currentParagraph.rationales);
+
+  // Show translation
+  setTimeout(() => showTranslation(currentParagraph.text), 4000);
+
+  // Show "Next Paragraph" button
+  const nextButton = document.getElementById("next-paragraph");
+  nextButton.style.display = "block";
+  nextButton.onclick = () => {
+    paragraphIndex++;
+    loadParagraph();
+  };
 }
 
 function showParagraphRationale(rationales) {
   const feedback = document.getElementById("paragraph-feedback");
   const rationaleList = rationales.map((r) => `<li>${r}</li>`).join("");
-  feedback.innerHTML += `<ul>${rationaleList}</ul>`;
+  feedback.innerHTML += `<ul style="color: green;">${rationaleList}</ul>`;
+}
+
+function showTranslation(text) {
+  const feedback = document.getElementById("paragraph-feedback");
+  const translation = `<p style="color: blue;">Translation: ${text}</p>`;
+  feedback.innerHTML += translation;
 }
 
 // ========================= INITIALIZATION =========================
