@@ -1,134 +1,111 @@
-/* General Reset */
-* {
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
 }
 
-/* Body Styling */
-body {
-  background: linear-gradient(to bottom, #e6f7ff, #b3e0ff);
-  color: #333;
-  font-size: 1rem;
-  line-height: 1.5;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Styling */
+/* Header */
 header {
   text-align: center;
   margin-bottom: 20px;
 }
 
 header h1 {
-  font-size: 2rem;
-  color: #0077cc;
+  font-size: 1.8em;
+  margin: 0;
 }
 
 header p {
-  font-size: 1.2rem;
-  color: #666;
-}
-
-/* Main Content Styling */
-main {
-  width: 90%;
-  max-width: 800px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1em;
+  color: #555;
 }
 
 /* Quiz Section */
-#questions-container {
-  margin-bottom: 20px;
+#questions-container p,
+#paragraph-container p {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 15px;
 }
 
-#questions-container p {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-#feedback {
-  margin-top: 15px;
-  font-size: 1.2rem;
-  text-align: center;
-}
-
-button {
-  background-color: #0077cc;
-  color: #fff;
+.quiz-button,
+.paragraph-button {
+  padding: 10px 20px;
+  font-size: 1.1em;
+  margin: 5px;
   border: none;
-  padding: 10px 15px;
-  font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  margin: 5px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #005fa3;
-  transform: translateY(-2px);
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Next Buttons */
-#next-question,
-#next-paragraph {
-  display: inline-block;
-  margin: 20px auto;
-}
-
-/* Paragraph Section */
-#paragraph-container {
-  margin-top: 40px;
-}
-
-#paragraph-content p {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+.quiz-button:hover,
+.paragraph-button:hover {
+  background-color: #0056b3;
 }
 
 .blank {
   display: inline-block;
-  padding: 0 8px;
-  background-color: #f2f2f2;
+  padding: 5px 10px;
+  margin: 2px;
   border: 1px dashed #ccc;
-  border-radius: 5px;
-  font-style: italic;
+  border-radius: 4px;
+  font-size: 1.1em;
   color: #333;
-  min-width: 50px;
-  text-align: center;
+  background-color: #f1f1f1;
+}
+
+/* Feedback Styles */
+#feedback,
+#paragraph-feedback {
+  margin-top: 15px;
+  font-size: 1.1em;
+}
+
+#feedback {
+  color: green;
 }
 
 #paragraph-feedback {
+  color: green;
+}
+
+/* Navigation Buttons */
+#next-paragraph {
+  display: none;
+  padding: 10px 20px;
+  font-size: 1.1em;
   margin-top: 20px;
-  font-size: 1.2rem;
-  text-align: center;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s;
 }
 
-#paragraph-container button {
-  padding: 10px 15px;
-  font-size: 1rem;
-  font-weight: bold;
+#next-paragraph:hover {
+  background-color: #0056b3;
 }
 
-/* Footer Styling */
+/* Footer */
 footer {
   text-align: center;
   margin-top: 30px;
-  font-size: 1rem;
-  color: #666;
+  font-size: 0.9em;
+  color: #777;
 }
