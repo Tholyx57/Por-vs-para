@@ -8,7 +8,7 @@
 /* Body Styling */
 body {
   font-family: 'Arial', sans-serif;
-  background: #e8f0f6;
+  background: #f7f9fc;
   color: #333;
   line-height: 1.6;
   display: flex;
@@ -19,7 +19,7 @@ body {
 header {
   text-align: center;
   padding: 20px;
-  background: linear-gradient(to right, #4a90e2, #005fa3);
+  background: linear-gradient(to right, #5a99e2, #1c78c3);
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -52,7 +52,7 @@ section {
 h2 {
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #005fa3;
+  color: #1c78c3;
 }
 
 .feedback-box {
@@ -73,7 +73,7 @@ h2 {
 
 /* Buttons */
 button {
-  background: #4a90e2;
+  background: #5a99e2;
   color: white;
   border: none;
   padding: 12px 18px;
@@ -85,7 +85,7 @@ button {
 }
 
 button:hover {
-  background: #005fa3;
+  background: #1c78c3;
 }
 
 button.primary-button {
@@ -97,7 +97,6 @@ button.primary-button {
   display: none;
 }
 
-/* Quiz and Paragraph Elements */
 .blank {
   display: inline-block;
   padding: 5px 10px;
@@ -110,6 +109,6 @@ button.primary-button {
 footer {
   text-align: center;
   padding: 15px;
-  background: #4a90e2;
+  background: #5a99e2;
   color: white;
 }
