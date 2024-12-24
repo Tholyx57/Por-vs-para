@@ -3,31 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz and Paragraph Practice</title>
+  <title>Spanish Grammar Quiz</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <header>
-      <h1>Quiz and Paragraph Practice</h1>
-      <p>Test your knowledge and practice your skills!</p>
-    </header>
-
-    <!-- Quiz Section -->
-    <div id="questions-container"></div>
-    <div id="feedback"></div>
-    <button id="grade-quiz" style="display: none;" class="gray-button">Grade Now</button>
-
-    <!-- Paragraph Section -->
-    <div id="paragraph-container"></div>
-    <div id="paragraph-feedback"></div>
-    <button id="next-paragraph" style="display: none;" class="gray-button">Next Paragraph</button>
-
-    <footer>
-      <p>&copy; 2024 Quiz and Practice App</p>
-    </footer>
-  </div>
-
+  <header>
+    <h1>Spanish Grammar Quiz</h1>
+    <p>Test your knowledge of Spanish grammar!</p>
+  </header>
+  <main>
+    <div id="quiz-container">
+      <div id="questions-container"></div>
+      <div id="feedback"></div>
+    </div>
+    <button id="next-question" style="display: none;">Next Question</button>
+  </main>
+  <footer>
+    <p>Good luck with your quiz!</p>
+  </footer>
+  <script src="questions.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
