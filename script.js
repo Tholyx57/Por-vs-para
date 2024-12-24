@@ -48,12 +48,16 @@ function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("feedback");
 
   if (selectedOption === question.correct) {
-    feedback.textContent = `Correct! ${question.rationale}`;
-    feedback.style.color = "green";
+    feedback.innerHTML = `
+      <p style="color: green;">Correct! ${question.rationale}</p>
+      <p><strong>Translation:</strong> The sentence translates to: "${question.translation}"</p>
+    `;
     totalScore++;
   } else {
-    feedback.textContent = `Incorrect. ${question.rationale}`;
-    feedback.style.color = "red";
+    feedback.innerHTML = `
+      <p style="color: red;">Incorrect. ${question.rationale}</p>
+      <p><strong>Translation:</strong> The sentence translates to: "${question.translation}"</p>
+    `;
   }
 
   currentIndex++;
@@ -114,7 +118,7 @@ function handleParagraphSelection(option, userAnswers, currentParagraph) {
     }
   }
 
-  if (userAnswers.every((answer, i) => answer)) {
+  if (userAnswers.every((answer) => answer)) {
     evaluateParagraphAnswer(userAnswers, currentParagraph);
   }
 }
@@ -134,13 +138,22 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
   });
 
   if (allCorrect) {
-    feedback.innerHTML = `<p style="color: green;">Correct! Translation: ${currentParagraph.translation}</p>`;
+    feedback.innerHTML = `
+      <p style="color: green;">Correct! Here are the rationales:</p>
+      <ul>${currentParagraph.rationales
+        .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
+        .join("")}</ul>
+      <p><strong>Translation:</strong> ${currentParagraph.translation}</p>
+    `;
     paragraphCorrect++;
   } else {
-    feedback.innerHTML = `<p style="color: red;">Incorrect. Review the rationale:</p>`;
-    feedback.innerHTML += `<ul>${currentParagraph.rationales
-      .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
-      .join("")}</ul>`;
+    feedback.innerHTML = `
+      <p style="color: red;">Incorrect. Here are the rationales:</p>
+      <ul>${currentParagraph.rationales
+        .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
+        .join("")}</ul>
+      <p><strong>Translation:</strong> ${currentParagraph.translation}</p>
+    `;
     paragraphIncorrect++;
   }
 
@@ -150,6 +163,8 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
 // ================== INITIALIZATION ==================
 function initQuiz() {
   shuffleQuestions(questionPool);
+  currentIndex = 0;
+  paragraphIndex = 0;
   loadQuestion();
   loadParagraph();
 }
