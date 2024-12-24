@@ -88,7 +88,7 @@ function showQuizResults() {
     incorrectAnswers.forEach((question, index) => {
       const questionReview = document.createElement("div");
       questionReview.innerHTML = `
-        <p><strong>${index + 1}. ${question.question}</strong></p>
+        <p>${index + 1}. ${question.question}</p>
         <p>Correct Answer: <strong>${question.correct}</strong></p>
         <p>Explanation: ${question.rationale}</p>
       `;
@@ -178,26 +178,23 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     feedback.textContent = "Correct!";
     feedback.style.color = "green";
     paragraphCorrect++;
+    showParagraphRationale(currentParagraph.rationales);
   } else {
-    feedback.textContent = "Incorrect. Review the correct answers:";
+    feedback.textContent = "Incorrect. Try Again.";
     feedback.style.color = "red";
-    const rationaleList = currentParagraph.rationales.map((r) => `<li>${r}</li>`).join("");
-    feedback.innerHTML += `<ul>${rationaleList}</ul>`;
-    paragraphIncorrect++;
+    showParagraphRationale(currentParagraph.rationales);
+    const tryAgainButton = document.createElement("button");
+    tryAgainButton.textContent = "Try Again";
+    tryAgainButton.classList.add("paragraph-button");
+    tryAgainButton.addEventListener("click", () => loadParagraph());
+    feedback.appendChild(tryAgainButton);
   }
+}
 
-  // Show rationale for 4 seconds
-  clearTimeout(rationaleTimeout);
-  rationaleTimeout = setTimeout(() => {
-    feedback.textContent = "";
-  }, 4000);
-
-  const nextButton = document.getElementById("next-paragraph");
-  nextButton.style.display = "block";
-  nextButton.onclick = () => {
-    paragraphIndex++;
-    loadParagraph();
-  };
+function showParagraphRationale(rationales) {
+  const feedback = document.getElementById("paragraph-feedback");
+  const rationaleList = rationales.map((r) => `<li>${r}</li>`).join("");
+  feedback.innerHTML += `<ul>${rationaleList}</ul>`;
 }
 
 // ========================= INITIALIZATION =========================
