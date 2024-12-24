@@ -5,8 +5,8 @@ let totalScore = 0;
 let paragraphCorrect = 0;
 let paragraphIncorrect = 0;
 
-// Shuffle Questions
-function shuffleQuestions(array) {
+// Shuffle Array
+function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -24,12 +24,9 @@ function loadQuestion() {
   }
 
   const currentQuestion = questionPool[currentIndex];
-
-  // Question Text
   const questionText = document.createElement("p");
   questionText.textContent = currentQuestion.question;
 
-  // Options
   const optionsContainer = document.createElement("div");
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
@@ -89,17 +86,17 @@ function loadParagraph() {
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
-  let userAnswers = Array(currentParagraph.answers.length).fill("");
-
-  paragraphContainer.innerHTML = currentParagraph.text.replace(/___/g, (match, i) => {
-    return `<span class="blank" id="blank-${i}">___</span>`;
+  const textWithBlanks = currentParagraph.text.replace(/___/g, (match, index) => {
+    return `<span class="blank" id="blank-${index}">___</span>`;
   });
+
+  paragraphContainer.innerHTML = textWithBlanks;
 
   const optionsContainer = document.createElement("div");
   currentParagraph.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.addEventListener("click", () => handleParagraphSelection(option, userAnswers, currentParagraph));
+    button.addEventListener("click", () => handleParagraphSelection(option, currentParagraph));
     optionsContainer.appendChild(button);
   });
 
@@ -109,49 +106,43 @@ function loadParagraph() {
   nextButton.style.display = "none";
 }
 
-function handleParagraphSelection(option, userAnswers, currentParagraph) {
-  for (let i = 0; i < userAnswers.length; i++) {
-    if (!userAnswers[i]) {
-      userAnswers[i] = option;
-      document.getElementById(`blank-${i}`).textContent = option;
-      break;
-    }
-  }
+function handleParagraphSelection(option, currentParagraph) {
+  const blanks = document.querySelectorAll(".blank");
+  let isFilled = true;
 
-  if (userAnswers.every((answer) => answer)) {
-    evaluateParagraphAnswer(userAnswers, currentParagraph);
-  }
-}
-
-function evaluateParagraphAnswer(userAnswers, currentParagraph) {
-  const feedback = document.getElementById("paragraph-feedback");
-  feedback.innerHTML = "";
-
-  let allCorrect = true;
-  userAnswers.forEach((answer, i) => {
-    if (answer !== currentParagraph.answers[i]) {
-      allCorrect = false;
-      document.getElementById(`blank-${i}`).style.color = "red";
-    } else {
-      document.getElementById(`blank-${i}`).style.color = "green";
+  blanks.forEach((blank, i) => {
+    if (blank.textContent === "___" && option === currentParagraph.answers[i]) {
+      blank.textContent = option;
+      blank.style.color = "green";
+      isFilled = false;
+    } else if (blank.textContent === "___") {
+      blank.style.color = "red";
+      isFilled = false;
     }
   });
 
+  if (isFilled) {
+    showParagraphRationale(currentParagraph);
+  }
+}
+
+function showParagraphRationale(currentParagraph) {
+  const feedback = document.getElementById("paragraph-feedback");
   feedback.innerHTML = `
-    <p style="color: ${allCorrect ? 'green' : 'red'};">${allCorrect ? 'Correct!' : 'Incorrect.'}</p>
     <ul>${currentParagraph.rationales
-      .map((rationale, i) => `<li>${rationale}</li>`)
+      .map((rationale) => `<li>${rationale}</li>`)
       .join("")}</ul>
     <p><strong>Translation:</strong> ${currentParagraph.translation}</p>
   `;
 
-  paragraphIndex++;
   document.getElementById("next-paragraph").style.display = "block";
+  paragraphIndex++;
 }
 
 // ================== INITIALIZATION ==================
 function initQuiz() {
-  shuffleQuestions(questionPool);
+  shuffleArray(questionPool);
+  shuffleArray(paragraphPool);
   currentIndex = 0;
   paragraphIndex = 0;
   loadQuestion();
