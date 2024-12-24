@@ -1,12 +1,7 @@
-// Variables
-let currentIndex = 0; // For quiz
-let paragraphIndex = 0; // For paragraphs
+let currentIndex = 0;
 let totalScore = 0;
-let incorrectAnswers = [];
-let paragraphCorrect = 0;
-let paragraphIncorrect = 0;
 
-// Shuffle Questions
+// Shuffle Questions (Fisher-Yates algorithm)
 function shuffleQuestions(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -14,138 +9,75 @@ function shuffleQuestions(array) {
   }
 }
 
-// Load Quiz Questions
+// Load Question
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
-  quizContainer.innerHTML = "";
+  const feedback = document.getElementById("feedback");
+  const nextButton = document.getElementById("next-question");
+
+  quizContainer.innerHTML = ""; // Clear previous question
+  feedback.textContent = ""; // Clear feedback
 
   if (currentIndex >= questionPool.length) {
-    showQuizResults();
+    showResults();
     return;
   }
 
   const currentQuestion = questionPool[currentIndex];
-
   const questionText = document.createElement("p");
   questionText.textContent = currentQuestion.question;
+  quizContainer.appendChild(questionText);
 
   const optionsContainer = document.createElement("div");
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.className = "quiz-button";
-    button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
+    button.addEventListener("click", () => evaluateAnswer(option, currentQuestion.correct, currentQuestion.rationale));
     optionsContainer.appendChild(button);
   });
 
-  quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
+  nextButton.style.display = "none"; // Hide "Next" button initially
 }
 
-function evaluateAnswer(selectedOption, question) {
+// Evaluate Answer
+function evaluateAnswer(selectedOption, correctOption, rationale) {
   const feedback = document.getElementById("feedback");
+  const nextButton = document.getElementById("next-question");
 
-  if (selectedOption === question.correct) {
-    feedback.textContent = `Correct! ${question.rationale}`;
+  if (selectedOption === correctOption) {
+    feedback.textContent = `Correct! ${rationale}`;
     feedback.style.color = "green";
     totalScore++;
   } else {
-    feedback.textContent = `Incorrect. ${question.rationale}`;
+    feedback.textContent = `Incorrect. ${rationale}`;
     feedback.style.color = "red";
-    incorrectAnswers.push(question);
   }
 
-  setTimeout(() => {
-    currentIndex++;
-    loadQuestion();
-  }, 3000);
+  nextButton.style.display = "inline-block"; // Show "Next" button
 }
 
-function showQuizResults() {
+// Show Results
+function showResults() {
   const quizContainer = document.getElementById("questions-container");
+  const feedback = document.getElementById("feedback");
+
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
-    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
-    <p>Review your incorrect answers below:</p>
+    <p>Your Score: ${totalScore} / ${questionPool.length}</p>
+    <p>Thank you for participating!</p>
   `;
-
-  incorrectAnswers.forEach((question, index) => {
-    const questionReview = document.createElement("div");
-    questionReview.innerHTML = `
-      <p><strong>${index + 1}. ${question.question}</strong></p>
-      <p>Correct Answer: ${question.correct}</p>
-      <p>Explanation: ${question.rationale}</p>
-    `;
-    quizContainer.appendChild(questionReview);
-  });
+  feedback.textContent = ""; // Clear feedback
 }
 
-// Load Paragraph Practice
-function loadParagraph() {
-  const paragraphContainer = document.getElementById("paragraph-container");
-  paragraphContainer.innerHTML = "";
-
-  if (paragraphIndex >= paragraphPool.length) {
-    showParagraphResults();
-    return;
-  }
-
-  const currentParagraph = paragraphPool[paragraphIndex];
-  let userAnswers = Array(currentParagraph.answers.length).fill("");
-
-  paragraphContainer.innerHTML = currentParagraph.text.split("___").map((part, i) => {
-    return `${part}<span class="blank" id="blank-${i}">___</span>`;
-  }).join("");
-
-  const optionsContainer = document.createElement("div");
-  currentParagraph.options.forEach((option) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    button.className = "paragraph-button";
-    button.addEventListener("click", () => handleParagraphSelection(option, userAnswers, currentParagraph));
-    optionsContainer.appendChild(button);
-  });
-
-  paragraphContainer.appendChild(optionsContainer);
-}
-
-function handleParagraphSelection(option, userAnswers, currentParagraph) {
-  const feedback = document.getElementById("paragraph-feedback");
-  feedback.innerHTML = "";
-
-  for (let i = 0; i < userAnswers.length; i++) {
-    if (!userAnswers[i]) {
-      userAnswers[i] = option;
-      document.getElementById(`blank-${i}`).textContent = option;
-      break;
-    }
-  }
-
-  if (userAnswers.every((answer, index) => answer === currentParagraph.answers[index])) {
-    paragraphCorrect++;
-    feedback.textContent = "Correct!";
-    feedback.style.color = "green";
-  } else {
-    paragraphIncorrect++;
-    feedback.textContent = "Incorrect. Try again!";
-    feedback.style.color = "red";
-  }
-}
-
-function showParagraphResults() {
-  const paragraphContainer = document.getElementById("paragraph-container");
-  paragraphContainer.innerHTML = `
-    <h2>Paragraph Practice Complete!</h2>
-    <p>Correct: ${paragraphCorrect}</p>
-    <p>Incorrect: ${paragraphIncorrect}</p>
-  `;
-}
-
-// Initialize
-function initQuiz() {
+// Initialize Quiz
+document.addEventListener("DOMContentLoaded", () => {
   shuffleQuestions(questionPool);
   loadQuestion();
-  loadParagraph();
-}
 
-document.addEventListener("DOMContentLoaded", initQuiz);
+  const nextButton = document.getElementById("next-question");
+  nextButton.addEventListener("click", () => {
+    currentIndex++;
+    loadQuestion();
+  });
+});
