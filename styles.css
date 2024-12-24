@@ -3,30 +3,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 /* Body Styling */
 body {
   background: linear-gradient(to bottom, #e6f7ff, #b3e0ff);
   color: #333;
-  font-size: 1.1rem;
+  font-size: 16px;
   line-height: 1.6;
-  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-}
-
-/* Container */
-#app {
-  background: #ffffff;
-  width: 90%;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  padding: 20px;
 }
 
 /* Header Styling */
@@ -36,30 +26,45 @@ header {
 }
 
 header h1 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #0077cc;
 }
 
 header p {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #666;
 }
 
-/* Buttons */
-button {
-  background-color: #4da6ff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 10px;
+/* Main Content Styling */
+main {
+  width: 100%;
+  max-width: 800px;
+}
+
+#quiz-container {
+  background: #fff;
+  padding: 20px;
   border-radius: 8px;
-  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#questions-container {
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
 button:hover {
-  background-color: #3399ff;
+  background-color: #005fa3;
 }
 
 button:disabled {
@@ -67,26 +72,17 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button.gray-button {
-  background-color: #808080;
-  color: white;
-}
-
-button.gray-button:hover {
-  background-color: #696969;
-}
-
-/* Feedback Message */
-#feedback, #paragraph-feedback {
-  font-size: 1rem;
-  text-align: center;
-  margin-top: 15px;
-}
-
 /* Footer Styling */
 footer {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 0.9rem;
   color: #666;
+}
+
+/* Feedback Styling */
+#feedback {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
