@@ -41,22 +41,22 @@ function loadQuestion() {
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
 
-  document.getElementById("feedback").textContent = ""; // Clear feedback
+  document.getElementById("quiz-feedback").textContent = ""; // Clear feedback
 }
 
 function evaluateAnswer(selectedOption, question) {
-  const feedback = document.getElementById("feedback");
+  const feedback = document.getElementById("quiz-feedback");
 
   if (selectedOption === question.correct) {
     feedback.innerHTML = `
       <p style="color: green;">Correct! ${question.rationale}</p>
-      <p><strong>Translation:</strong> The sentence translates to: "${question.translation}"</p>
+      <p><strong>Translation:</strong> ${question.translation}</p>
     `;
     totalScore++;
   } else {
     feedback.innerHTML = `
       <p style="color: red;">Incorrect. ${question.rationale}</p>
-      <p><strong>Translation:</strong> The sentence translates to: "${question.translation}"</p>
+      <p><strong>Translation:</strong> ${question.translation}</p>
     `;
   }
 
@@ -137,26 +137,15 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     }
   });
 
-  if (allCorrect) {
-    feedback.innerHTML = `
-      <p style="color: green;">Correct! Here are the rationales:</p>
-      <ul>${currentParagraph.rationales
-        .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
-        .join("")}</ul>
-      <p><strong>Translation:</strong> ${currentParagraph.translation}</p>
-    `;
-    paragraphCorrect++;
-  } else {
-    feedback.innerHTML = `
-      <p style="color: red;">Incorrect. Here are the rationales:</p>
-      <ul>${currentParagraph.rationales
-        .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
-        .join("")}</ul>
-      <p><strong>Translation:</strong> ${currentParagraph.translation}</p>
-    `;
-    paragraphIncorrect++;
-  }
+  feedback.innerHTML = `
+    <p style="color: ${allCorrect ? 'green' : 'red'};">${allCorrect ? 'Correct!' : 'Incorrect.'}</p>
+    <ul>${currentParagraph.rationales
+      .map((rationale, i) => `<li>${rationale}</li>`)
+      .join("")}</ul>
+    <p><strong>Translation:</strong> ${currentParagraph.translation}</p>
+  `;
 
+  paragraphIndex++;
   document.getElementById("next-paragraph").style.display = "block";
 }
 
