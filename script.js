@@ -1,14 +1,11 @@
 // Variables
-let currentIndex = 0; // For quiz
-let paragraphIndex = 0; // For paragraphs
+let currentIndex = 0; // Quiz index
+let paragraphIndex = 0; // Paragraph index
 let totalScore = 0;
-let incorrectAnswers = [];
 let paragraphCorrect = 0;
 let paragraphIncorrect = 0;
-let feedbackTimeout; // To manage clearing feedback timeout
-let rationaleTimeout; // To clear rationale timeout
 
-// Shuffle Questions (for randomness)
+// Shuffle Questions
 function shuffleQuestions(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -16,7 +13,7 @@ function shuffleQuestions(array) {
   }
 }
 
-// ========================= QUIZ SECTION =========================
+// ================== QUIZ SECTION ==================
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
   quizContainer.innerHTML = ""; // Clear previous content
@@ -28,16 +25,15 @@ function loadQuestion() {
 
   const currentQuestion = questionPool[currentIndex];
 
-  // Question text
+  // Question Text
   const questionText = document.createElement("p");
   questionText.textContent = currentQuestion.question;
 
-  // Options as buttons
+  // Options
   const optionsContainer = document.createElement("div");
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.classList.add("quiz-button");
     button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
     optionsContainer.appendChild(button);
   });
@@ -45,9 +41,7 @@ function loadQuestion() {
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
 
-  // Clear previous feedback
-  const feedback = document.getElementById("feedback");
-  feedback.textContent = "";
+  document.getElementById("feedback").textContent = ""; // Clear feedback
 }
 
 function evaluateAnswer(selectedOption, question) {
@@ -55,107 +49,69 @@ function evaluateAnswer(selectedOption, question) {
 
   if (selectedOption === question.correct) {
     feedback.textContent = `Correct! ${question.rationale}`;
+    feedback.style.color = "green";
     totalScore++;
   } else {
     feedback.textContent = `Incorrect. ${question.rationale}`;
-    incorrectAnswers.push(question); // Add incorrect question for review
+    feedback.style.color = "red";
   }
 
-  feedback.style.color = "green";
-
-  // Clear feedback and load next question after 4 seconds
-  clearTimeout(feedbackTimeout);
-  feedbackTimeout = setTimeout(() => {
-    feedback.textContent = "";
+  setTimeout(() => {
     currentIndex++;
     loadQuestion();
-  }, 4000);
+  }, 3000);
 }
 
 function showQuizResults() {
   const quizContainer = document.getElementById("questions-container");
-
   quizContainer.innerHTML = `
     <h2>Quiz Complete!</h2>
-    <p>Your Score: <span style="color: green;">${totalScore}</span> / ${questionPool.length}</p>
-    <p>Incorrect Answers: <span style="color: red;">${incorrectAnswers.length}</span></p>
+    <p>Your Score: ${totalScore} / ${questionPool.length}</p>
   `;
-
-  if (incorrectAnswers.length > 0) {
-    const reviewSection = document.createElement("div");
-    reviewSection.innerHTML = "<h3>Review Incorrect Questions:</h3>";
-
-    incorrectAnswers.forEach((question, index) => {
-      const questionReview = document.createElement("div");
-      questionReview.innerHTML = `
-        <p>${index + 1}. ${question.question}</p>
-        <p>Correct Answer: <strong>${question.correct}</strong></p>
-        <p>Explanation: ${question.rationale}</p>
-      `;
-      reviewSection.appendChild(questionReview);
-    });
-
-    quizContainer.appendChild(reviewSection);
-  }
 }
 
-// ========================= PARAGRAPH SECTION =========================
+// ================== PARAGRAPH SECTION ==================
 function loadParagraph() {
   const paragraphContainer = document.getElementById("paragraph-container");
   const feedback = document.getElementById("paragraph-feedback");
   const nextButton = document.getElementById("next-paragraph");
 
-  paragraphContainer.innerHTML = "";
-  feedback.innerHTML = "";
-  nextButton.style.display = "none";
-
   if (paragraphIndex >= paragraphPool.length) {
     paragraphContainer.innerHTML = `
       <h2>Paragraph Practice Complete!</h2>
-      <p>Correct: <span style="color: green;">${paragraphCorrect}</span></p>
-      <p>Incorrect: <span style="color: red;">${paragraphIncorrect}</span></p>
+      <p>Correct: ${paragraphCorrect}</p>
+      <p>Incorrect: ${paragraphIncorrect}</p>
     `;
+    nextButton.style.display = "none";
     return;
   }
 
   const currentParagraph = paragraphPool[paragraphIndex];
   let userAnswers = Array(currentParagraph.answers.length).fill("");
 
-  let paragraphHTML = currentParagraph.text.split("___").map((part, i) => {
-    if (i < currentParagraph.answers.length) {
-      return `${part} <span class="blank" id="blank-${i}">___</span>`;
-    }
-    return part;
-  }).join("");
-
-  paragraphContainer.innerHTML = `<p>${paragraphHTML}</p>`;
+  paragraphContainer.innerHTML = currentParagraph.text.replace(/___/g, (match, i) => {
+    return `<span class="blank" id="blank-${i}">___</span>`;
+  });
 
   const optionsContainer = document.createElement("div");
-  const uniqueOptions = [...new Set(currentParagraph.options)];
-  uniqueOptions.forEach((option) => {
+  currentParagraph.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.classList.add("paragraph-button");
     button.addEventListener("click", () => handleParagraphSelection(option, userAnswers, currentParagraph));
     optionsContainer.appendChild(button);
   });
 
   paragraphContainer.appendChild(optionsContainer);
 
-  const submitButton = document.createElement("button");
-  submitButton.textContent = "Submit";
-  submitButton.id = "submit-paragraph";
-  submitButton.classList.add("paragraph-button");
-  submitButton.addEventListener("click", () => evaluateParagraphAnswer(userAnswers, currentParagraph));
-  paragraphContainer.appendChild(submitButton);
+  feedback.textContent = "";
+  nextButton.style.display = "none";
 }
 
 function handleParagraphSelection(option, userAnswers, currentParagraph) {
   for (let i = 0; i < userAnswers.length; i++) {
     if (!userAnswers[i]) {
       userAnswers[i] = option;
-      const blankElement = document.getElementById(`blank-${i}`);
-      blankElement.textContent = option;
+      document.getElementById(`blank-${i}`).textContent = option;
       break;
     }
   }
@@ -163,8 +119,9 @@ function handleParagraphSelection(option, userAnswers, currentParagraph) {
 
 function evaluateParagraphAnswer(userAnswers, currentParagraph) {
   const feedback = document.getElementById("paragraph-feedback");
-  let allCorrect = true;
+  feedback.innerHTML = "";
 
+  let allCorrect = true;
   userAnswers.forEach((answer, i) => {
     if (answer !== currentParagraph.answers[i]) {
       allCorrect = false;
@@ -174,43 +131,17 @@ function evaluateParagraphAnswer(userAnswers, currentParagraph) {
     }
   });
 
-  if (allCorrect) {
-    feedback.textContent = "Correct!";
-    feedback.style.color = "green";
-    paragraphCorrect++;
-  } else {
-    feedback.textContent = "Incorrect. Try Again.";
-    feedback.style.color = "red";
-  }
+  feedback.innerHTML = allCorrect
+    ? `<p style="color: green;">Correct!</p>`
+    : `<p style="color: red;">Incorrect. Review the rationale:</p>`;
 
-  // Show rationale
-  showParagraphRationale(currentParagraph.rationales);
-
-  // Show translation
-  setTimeout(() => showTranslation(currentParagraph.text), 4000);
-
-  // Show "Next Paragraph" button
-  const nextButton = document.getElementById("next-paragraph");
-  nextButton.style.display = "block";
-  nextButton.onclick = () => {
-    paragraphIndex++;
-    loadParagraph();
-  };
+  feedback.innerHTML += `<ul>${currentParagraph.rationales
+    .map((r, i) => `<li>Blank ${i + 1}: ${r}</li>`)
+    .join("")}</ul>`;
+  document.getElementById("next-paragraph").style.display = "block";
 }
 
-function showParagraphRationale(rationales) {
-  const feedback = document.getElementById("paragraph-feedback");
-  const rationaleList = rationales.map((r) => `<li>${r}</li>`).join("");
-  feedback.innerHTML += `<ul style="color: green;">${rationaleList}</ul>`;
-}
-
-function showTranslation(text) {
-  const feedback = document.getElementById("paragraph-feedback");
-  const translation = `<p style="color: blue;">Translation: ${text}</p>`;
-  feedback.innerHTML += translation;
-}
-
-// ========================= INITIALIZATION =========================
+// ================== INITIALIZATION ==================
 function initQuiz() {
   shuffleQuestions(questionPool);
   loadQuestion();
