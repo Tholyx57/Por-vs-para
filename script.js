@@ -28,10 +28,12 @@ function shuffleArray(array) {
 // ================== QUIZ SECTION ==================
 function loadQuestion() {
   const quizContainer = document.getElementById("questions-container");
+  const nextQuestionButton = document.getElementById("next-question-button");
   quizContainer.innerHTML = ""; // Clear previous content
 
   if (currentIndex >= questionPool.length) {
     showQuizResults();
+    nextQuestionButton.style.display = "none";
     return;
   }
 
@@ -50,13 +52,12 @@ function loadQuestion() {
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
 
-  const nextButton = document.getElementById("next-question-button");
-  nextButton.style.display = "none"; // Hide the button until an answer is selected
+  nextQuestionButton.style.display = "none"; // Hide the button until an answer is selected
 }
 
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("quiz-feedback");
-  const nextButton = document.getElementById("next-question-button");
+  const nextQuestionButton = document.getElementById("next-question-button");
   const translation = translateText(question.question);
 
   if (selectedOption === question.correct) {
@@ -72,7 +73,7 @@ function evaluateAnswer(selectedOption, question) {
     `;
   }
 
-  nextButton.style.display = "block"; // Show the Next Question button
+  nextQuestionButton.style.display = "block"; // Show the Next Question button
 }
 
 function showQuizResults() {
@@ -87,7 +88,7 @@ function showQuizResults() {
 function loadParagraph() {
   const paragraphContainer = document.getElementById("paragraph-container");
   const feedback = document.getElementById("paragraph-feedback");
-  const nextButton = document.getElementById("next-paragraph");
+  const nextParagraphButton = document.getElementById("next-paragraph");
 
   if (paragraphIndex >= paragraphPool.length) {
     paragraphContainer.innerHTML = `
@@ -95,7 +96,7 @@ function loadParagraph() {
       <p>Correct: ${paragraphCorrect}</p>
       <p>Incorrect: ${paragraphIncorrect}</p>
     `;
-    nextButton.style.display = "none";
+    nextParagraphButton.style.display = "none";
     return;
   }
 
@@ -119,7 +120,7 @@ function loadParagraph() {
   paragraphContainer.appendChild(optionsContainer);
 
   feedback.innerHTML = "";
-  nextButton.style.display = "none";
+  nextParagraphButton.style.display = "none";
 }
 
 function handleParagraphSelection(option, currentParagraph) {
@@ -167,7 +168,7 @@ function initQuiz() {
   loadParagraph();
 }
 
-// Event Listeners for Buttons
+// Add event listeners for buttons
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("next-question-button").addEventListener("click", () => {
     currentIndex++;
@@ -175,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("next-paragraph").addEventListener("click", () => {
-    paragraphIndex++;
     loadParagraph();
   });
 
