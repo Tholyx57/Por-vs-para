@@ -98,3 +98,20 @@ footer {
   text-align: center;
   padding: 10px;
 }
+
+.primary-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.primary-button:hover {
+  background-color: #45a049;
+}
+
