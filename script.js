@@ -50,19 +50,8 @@ function loadQuestion() {
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
 
-  const nextButton = document.createElement("button");
-  nextButton.textContent = "Next Question";
-  nextButton.id = "next-question-button";
-  nextButton.classList.add("primary-button");
-  nextButton.style.display = "none"; // Initially hidden
-  nextButton.addEventListener("click", () => {
-    currentIndex++;
-    loadQuestion();
-  });
-
-  quizContainer.appendChild(nextButton);
-
-  document.getElementById("quiz-feedback").textContent = ""; // Clear feedback
+  const nextButton = document.getElementById("next-question-button");
+  nextButton.style.display = "none"; // Hide the button until an answer is selected
 }
 
 function evaluateAnswer(selectedOption, question) {
@@ -178,4 +167,17 @@ function initQuiz() {
   loadParagraph();
 }
 
-document.addEventListener("DOMContentLoaded", initQuiz);
+// Event Listeners for Buttons
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("next-question-button").addEventListener("click", () => {
+    currentIndex++;
+    loadQuestion();
+  });
+
+  document.getElementById("next-paragraph").addEventListener("click", () => {
+    paragraphIndex++;
+    loadParagraph();
+  });
+
+  initQuiz();
+});
