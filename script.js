@@ -5,18 +5,6 @@ let totalScore = 0;
 let paragraphCorrect = 0;
 let paragraphIncorrect = 0;
 
-// Placeholder function for dynamic translation
-function translateText(text) {
-  const translations = {
-    "Caminamos ___ el parque para disfrutar el buen clima.":
-      "We walked ___ the park to enjoy the good weather.",
-    "Estudié mucho ___ aprobar el examen de historia.":
-      "I studied hard ___ to pass the history exam.",
-  };
-
-  return translations[text] || "Translation not available.";
-}
-
 // Shuffle Array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -64,18 +52,15 @@ function loadQuestion() {
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("quiz-feedback");
   const nextQuestionButton = document.getElementById("next-question-button");
-  const translation = translateText(question.question);
 
   if (selectedOption === question.correct) {
     feedback.innerHTML = `
       <p style="color: green;">Correct! ${question.rationale}</p>
-      <p><strong>Translation:</strong> ${translation}</p>
     `;
     totalScore++;
   } else {
     feedback.innerHTML = `
       <p style="color: red;">Incorrect. ${question.rationale}</p>
-      <p><strong>Translation:</strong> ${translation}</p>
     `;
   }
 
@@ -155,13 +140,10 @@ function handleParagraphSelection(option, currentParagraph) {
 function showParagraphRationale(currentParagraph) {
   const feedback = document.getElementById("paragraph-feedback");
 
-  const translation = translateText(currentParagraph.text);
-
   feedback.innerHTML = `
     <ul>${currentParagraph.rationales
       .map((rationale) => `<li>${rationale}</li>`)
       .join("")}</ul>
-    <p><strong>Translation:</strong> ${translation}</p>
   `;
 
   document.getElementById("next-paragraph").style.display = "block";
