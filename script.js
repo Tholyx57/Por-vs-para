@@ -7,7 +7,6 @@ let paragraphIncorrect = 0;
 
 // Placeholder function for dynamic translation
 function translateText(text) {
-  // Simulate translation for now (replace this with an actual API or library for real translations)
   const translations = {
     "Caminamos ___ el parque para disfrutar el buen clima.":
       "We walked ___ the park to enjoy the good weather.",
@@ -51,12 +50,24 @@ function loadQuestion() {
   quizContainer.appendChild(questionText);
   quizContainer.appendChild(optionsContainer);
 
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next Question";
+  nextButton.id = "next-question-button";
+  nextButton.classList.add("primary-button");
+  nextButton.style.display = "none"; // Initially hidden
+  nextButton.addEventListener("click", () => {
+    currentIndex++;
+    loadQuestion();
+  });
+
+  quizContainer.appendChild(nextButton);
+
   document.getElementById("quiz-feedback").textContent = ""; // Clear feedback
 }
 
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("quiz-feedback");
-
+  const nextButton = document.getElementById("next-question-button");
   const translation = translateText(question.question);
 
   if (selectedOption === question.correct) {
@@ -72,8 +83,7 @@ function evaluateAnswer(selectedOption, question) {
     `;
   }
 
-  currentIndex++;
-  setTimeout(loadQuestion, 2000); // Load next question after 2 seconds
+  nextButton.style.display = "block"; // Show the Next Question button
 }
 
 function showQuizResults() {
