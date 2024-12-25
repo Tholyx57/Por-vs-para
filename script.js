@@ -5,6 +5,19 @@ let totalScore = 0;
 let paragraphCorrect = 0;
 let paragraphIncorrect = 0;
 
+// Placeholder function for dynamic translation
+function translateText(text) {
+  // Simulate translation for now (replace this with an actual API or library for real translations)
+  const translations = {
+    "Caminamos ___ el parque para disfrutar el buen clima.":
+      "We walked ___ the park to enjoy the good weather.",
+    "Estudié mucho ___ aprobar el examen de historia.":
+      "I studied hard ___ to pass the history exam.",
+  };
+
+  return translations[text] || "Translation not available.";
+}
+
 // Shuffle Array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -31,7 +44,6 @@ function loadQuestion() {
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.classList.add("option-button");
     button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
     optionsContainer.appendChild(button);
   });
@@ -45,21 +57,23 @@ function loadQuestion() {
 function evaluateAnswer(selectedOption, question) {
   const feedback = document.getElementById("quiz-feedback");
 
+  const translation = translateText(question.question);
+
   if (selectedOption === question.correct) {
     feedback.innerHTML = `
-      <p class="correct-feedback">Correct! ${question.rationale}</p>
-      <p><strong>Translation:</strong> ${question.translation || "Translation not available."}</p>
+      <p style="color: green;">Correct! ${question.rationale}</p>
+      <p><strong>Translation:</strong> ${translation}</p>
     `;
     totalScore++;
   } else {
     feedback.innerHTML = `
-      <p class="incorrect-feedback">Incorrect. ${question.rationale}</p>
-      <p><strong>Translation:</strong> ${question.translation || "Translation not available."}</p>
+      <p style="color: red;">Incorrect. ${question.rationale}</p>
+      <p><strong>Translation:</strong> ${translation}</p>
     `;
   }
 
   currentIndex++;
-  setTimeout(loadQuestion, 3000);
+  setTimeout(loadQuestion, 2000); // Load next question after 2 seconds
 }
 
 function showQuizResults() {
@@ -97,42 +111,47 @@ function loadParagraph() {
   currentParagraph.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.classList.add("option-button");
-    button.addEventListener("click", () => handleParagraphSelection(option, currentParagraph));
+    button.addEventListener("click", () =>
+      handleParagraphSelection(option, currentParagraph)
+    );
     optionsContainer.appendChild(button);
   });
 
   paragraphContainer.appendChild(optionsContainer);
 
-  feedback.textContent = "";
+  feedback.innerHTML = "";
   nextButton.style.display = "none";
 }
 
 function handleParagraphSelection(option, currentParagraph) {
   const blanks = document.querySelectorAll(".blank");
-  let isComplete = true;
+  let isFilled = true;
 
   blanks.forEach((blank, i) => {
     if (blank.textContent === "___" && option === currentParagraph.answers[i]) {
       blank.textContent = option;
       blank.style.color = "green";
     } else if (blank.textContent === "___") {
-      isComplete = false;
+      blank.style.color = "red";
+      isFilled = false;
     }
   });
 
-  if (isComplete) {
+  if (isFilled) {
     showParagraphRationale(currentParagraph);
   }
 }
 
 function showParagraphRationale(currentParagraph) {
   const feedback = document.getElementById("paragraph-feedback");
+
+  const translation = translateText(currentParagraph.text);
+
   feedback.innerHTML = `
     <ul>${currentParagraph.rationales
       .map((rationale) => `<li>${rationale}</li>`)
       .join("")}</ul>
-    <p><strong>Translation:</strong> ${currentParagraph.translation || "Translation not available."}</p>
+    <p><strong>Translation:</strong> ${translation}</p>
   `;
 
   document.getElementById("next-paragraph").style.display = "block";
