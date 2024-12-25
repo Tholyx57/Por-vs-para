@@ -31,6 +31,7 @@ function loadQuestion() {
   currentQuestion.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
+    button.classList.add("option-button");
     button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
     optionsContainer.appendChild(button);
   });
@@ -46,19 +47,19 @@ function evaluateAnswer(selectedOption, question) {
 
   if (selectedOption === question.correct) {
     feedback.innerHTML = `
-      <p style="color: green;">Correct! ${question.rationale}</p>
-      <p><strong>Translation:</strong> ${question.translation}</p>
+      <p class="correct-feedback">Correct! ${question.rationale}</p>
+      <p><strong>Translation:</strong> ${question.translation || "Translation not available."}</p>
     `;
     totalScore++;
   } else {
     feedback.innerHTML = `
-      <p style="color: red;">Incorrect. ${question.rationale}</p>
-      <p><strong>Translation:</strong> ${question.translation}</p>
+      <p class="incorrect-feedback">Incorrect. ${question.rationale}</p>
+      <p><strong>Translation:</strong> ${question.translation || "Translation not available."}</p>
     `;
   }
 
   currentIndex++;
-  loadQuestion();
+  setTimeout(loadQuestion, 3000);
 }
 
 function showQuizResults() {
@@ -90,12 +91,13 @@ function loadParagraph() {
     return `<span class="blank" id="blank-${index}">___</span>`;
   });
 
-  paragraphContainer.innerHTML = textWithBlanks;
+  paragraphContainer.innerHTML = `<p>${textWithBlanks}</p>`;
 
   const optionsContainer = document.createElement("div");
   currentParagraph.options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option;
+    button.classList.add("option-button");
     button.addEventListener("click", () => handleParagraphSelection(option, currentParagraph));
     optionsContainer.appendChild(button);
   });
@@ -108,20 +110,18 @@ function loadParagraph() {
 
 function handleParagraphSelection(option, currentParagraph) {
   const blanks = document.querySelectorAll(".blank");
-  let isFilled = true;
+  let isComplete = true;
 
   blanks.forEach((blank, i) => {
     if (blank.textContent === "___" && option === currentParagraph.answers[i]) {
       blank.textContent = option;
       blank.style.color = "green";
-      isFilled = false;
     } else if (blank.textContent === "___") {
-      blank.style.color = "red";
-      isFilled = false;
+      isComplete = false;
     }
   });
 
-  if (isFilled) {
+  if (isComplete) {
     showParagraphRationale(currentParagraph);
   }
 }
@@ -132,7 +132,7 @@ function showParagraphRationale(currentParagraph) {
     <ul>${currentParagraph.rationales
       .map((rationale) => `<li>${rationale}</li>`)
       .join("")}</ul>
-    <p><strong>Translation:</strong> ${currentParagraph.translation}</p>
+    <p><strong>Translation:</strong> ${currentParagraph.translation || "Translation not available."}</p>
   `;
 
   document.getElementById("next-paragraph").style.display = "block";
