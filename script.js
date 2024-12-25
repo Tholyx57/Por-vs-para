@@ -27,32 +27,38 @@ function shuffleArray(array) {
 
 // ================== QUIZ SECTION ==================
 function loadQuestion() {
-  const quizContainer = document.getElementById("questions-container");
-  const nextQuestionButton = document.getElementById("next-question-button");
-  quizContainer.innerHTML = ""; // Clear previous content
+  try {
+    const quizContainer = document.getElementById("questions-container");
+    const nextQuestionButton = document.getElementById("next-question-button");
+    quizContainer.innerHTML = ""; // Clear previous content
 
-  if (currentIndex >= questionPool.length) {
-    showQuizResults();
-    nextQuestionButton.style.display = "none";
-    return;
+    if (currentIndex >= questionPool.length) {
+      showQuizResults();
+      nextQuestionButton.style.display = "none";
+      return;
+    }
+
+    const currentQuestion = questionPool[currentIndex];
+    const questionText = document.createElement("p");
+    questionText.textContent = currentQuestion.question;
+
+    const optionsContainer = document.createElement("div");
+    currentQuestion.options.forEach((option) => {
+      const button = document.createElement("button");
+      button.textContent = option;
+      button.addEventListener("click", () =>
+        evaluateAnswer(option, currentQuestion)
+      );
+      optionsContainer.appendChild(button);
+    });
+
+    quizContainer.appendChild(questionText);
+    quizContainer.appendChild(optionsContainer);
+
+    nextQuestionButton.style.display = "none"; // Hide the button until an answer is selected
+  } catch (error) {
+    console.error("Error in loadQuestion:", error);
   }
-
-  const currentQuestion = questionPool[currentIndex];
-  const questionText = document.createElement("p");
-  questionText.textContent = currentQuestion.question;
-
-  const optionsContainer = document.createElement("div");
-  currentQuestion.options.forEach((option) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    button.addEventListener("click", () => evaluateAnswer(option, currentQuestion));
-    optionsContainer.appendChild(button);
-  });
-
-  quizContainer.appendChild(questionText);
-  quizContainer.appendChild(optionsContainer);
-
-  nextQuestionButton.style.display = "none"; // Hide the button until an answer is selected
 }
 
 function evaluateAnswer(selectedOption, question) {
@@ -86,41 +92,45 @@ function showQuizResults() {
 
 // ================== PARAGRAPH SECTION ==================
 function loadParagraph() {
-  const paragraphContainer = document.getElementById("paragraph-container");
-  const feedback = document.getElementById("paragraph-feedback");
-  const nextParagraphButton = document.getElementById("next-paragraph");
+  try {
+    const paragraphContainer = document.getElementById("paragraph-container");
+    const feedback = document.getElementById("paragraph-feedback");
+    const nextParagraphButton = document.getElementById("next-paragraph");
 
-  if (paragraphIndex >= paragraphPool.length) {
-    paragraphContainer.innerHTML = `
-      <h2>Paragraph Practice Complete!</h2>
-      <p>Correct: ${paragraphCorrect}</p>
-      <p>Incorrect: ${paragraphIncorrect}</p>
-    `;
+    if (paragraphIndex >= paragraphPool.length) {
+      paragraphContainer.innerHTML = `
+        <h2>Paragraph Practice Complete!</h2>
+        <p>Correct: ${paragraphCorrect}</p>
+        <p>Incorrect: ${paragraphIncorrect}</p>
+      `;
+      nextParagraphButton.style.display = "none";
+      return;
+    }
+
+    const currentParagraph = paragraphPool[paragraphIndex];
+    const textWithBlanks = currentParagraph.text.replace(/___/g, (match, index) => {
+      return `<span class="blank" id="blank-${index}">___</span>`;
+    });
+
+    paragraphContainer.innerHTML = `<p>${textWithBlanks}</p>`;
+
+    const optionsContainer = document.createElement("div");
+    currentParagraph.options.forEach((option) => {
+      const button = document.createElement("button");
+      button.textContent = option;
+      button.addEventListener("click", () =>
+        handleParagraphSelection(option, currentParagraph)
+      );
+      optionsContainer.appendChild(button);
+    });
+
+    paragraphContainer.appendChild(optionsContainer);
+
+    feedback.innerHTML = "";
     nextParagraphButton.style.display = "none";
-    return;
+  } catch (error) {
+    console.error("Error in loadParagraph:", error);
   }
-
-  const currentParagraph = paragraphPool[paragraphIndex];
-  const textWithBlanks = currentParagraph.text.replace(/___/g, (match, index) => {
-    return `<span class="blank" id="blank-${index}">___</span>`;
-  });
-
-  paragraphContainer.innerHTML = `<p>${textWithBlanks}</p>`;
-
-  const optionsContainer = document.createElement("div");
-  currentParagraph.options.forEach((option) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    button.addEventListener("click", () =>
-      handleParagraphSelection(option, currentParagraph)
-    );
-    optionsContainer.appendChild(button);
-  });
-
-  paragraphContainer.appendChild(optionsContainer);
-
-  feedback.innerHTML = "";
-  nextParagraphButton.style.display = "none";
 }
 
 function handleParagraphSelection(option, currentParagraph) {
